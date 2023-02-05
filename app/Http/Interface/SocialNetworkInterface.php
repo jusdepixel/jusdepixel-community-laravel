@@ -6,6 +6,7 @@ namespace App\Http\Interface;
 
 interface SocialNetworkInterface
 {
-    public function getName(): string;
-    public function getUsername(): string;
+    public function initialize(): void;
+    public function isAuthenticated(): bool;
+    public function getSocialId(): ?int;
 }
