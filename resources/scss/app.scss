@@ -1,0 +1,53 @@
+@import "variables";
+@import "background";
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+span.nav-link, span.nav-link:hover {
+    color: $gray-600;
+}
+
+h3 {
+    letter-spacing: 0.1rem;
+    color: $white;
+
+    & i {
+    color: $info;
+    }
+}
+
+h6 {
+    color: $gray-600;
+    padding-left: 34px;
+}
+
+.posts {
+     position: relative;
+     background-color: rgba(255, 255, 255, 0.1);
+     padding: 20px;
+
+    & picture {
+        display: block;
+        padding: 20px 10px;
+        background-color: $black;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+     & span {
+         display: block;
+
+         &.username {
+             color: $white;
+         }
+     }
+
+     & button {
+         display: block;
+         width: 100%;
+
+         &:hover {
+             background-color: $black;
+         }
+     }
+ }
