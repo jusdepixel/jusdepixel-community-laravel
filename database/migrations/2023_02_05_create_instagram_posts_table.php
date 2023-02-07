@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('social_network_posts', function (Blueprint $table) {
+        Schema::create('instagram_posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
-            $table->string('social_network');
-            $table->integer('social_id');
+            $table->integer('ig_id');
             $table->integer('media_id');
             $table->string('type');
             $table->string('url');

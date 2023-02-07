@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\SocialNetwork\Instagram;
+use App\Instagram\Controller as InstagramController;
+use App\Models\InstagramPost;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
-class HomeController
+class HomeController extends InstagramController
 {
-    public function index(Request $request, Instagram $instagram): RedirectResponse|View
+    public function process(): RedirectResponse|View
     {
-        $instagram->initialize();
-
-        if ($request->get('code')) {
-            $instagram->authenticate($request->get('code'));
-            return redirect()->route('home@index');
-        }
-
         return view('home', [
-            'authorizeUrl' => $instagram->getAuthorizeUrl(),
-            'isAuthenticated' => $instagram->isAuthenticated(),
-            'socialId' => $instagram->getSocialId(),
-            'posts' => DB::table('social_network_posts')
+            'authorizeUrl' => $this->authorizeUrl,
+            'profile' => $this->profile,
+            'posts' => InstagramPost::where('ig_id', 1)
                 ->orderBy('created_at DESC')
                 ->take(10)
                 ->get()

@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css">
-        <title>Community</title>
+        <title>Jusdepixel Community</title>
     </head>
 
     <body>
@@ -42,20 +42,25 @@
                 </ul>
             </div>
         </nav>
-        <div class="container">
+        <div class="container mt-5">
+            <h4>Mes posts Instagram</h4>
+            <small class="text-muted">Partagez vos meilleurs posts avec la communauté !</small>
 
-            <ul class="list-group mt-5">
+
+            <ul class="list-group mb-5 mt-5">
                 @foreach($posts as $post)
-                    <li class="list-group-item">
+                    <li class="list-group-item text-break">
+                        <img src="{{ $post->media_url }}" alt="{{ $post->username }}" width="100%" class="mb-3 mt-2">
                         <strong>id: </strong>{{ $post->id }}<br>
-                        <strong>created_at: </strong>{{ $post->created_at }}<br>
-                        <strong>updated_at: </strong>{{ $post->updated_at }}<br>
-                        <strong>social_id: </strong>{{ $post->social_id }}<br>
-                        <strong>media_id: </strong>{{ $post->media_id }}<br>
-                        <strong>type: </strong>{{ $post->type }}<br>
-                        <strong>url: </strong>{{ $post->url }}<br>
+                        <strong>media_type: </strong>{{ $post->media_type }}<br>
+                        <strong>media_url: </strong>{{ $post->media_url }}<br>
                         <strong>username: </strong>{{ $post->username }}<br>
                         <strong>timestamp: </strong>{{ $post->timestamp }}<br>
+                        <form action="" class="text-end">
+                            <button class="btn btn-primary mt-2 mb-2 btn-sm">
+                                <i class="bi bi-share me-2"></i>Partager
+                            </button>
+                        </form>
                     </li>
                 @endforeach
             </ul>

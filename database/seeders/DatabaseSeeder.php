@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\SocialNetwork;
+use App\Models\InstagramPost;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        SocialNetwork::factory(3)->create();
+        InstagramPost::factory(3)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

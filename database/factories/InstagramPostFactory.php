@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\SocialNetwork;
+use App\Models\InstagramPost;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<SocialNetwork>
+ * @extends Factory<InstagramPost>
  */
-class SocialNetworkFactory extends Factory
+class InstagramPostFactory extends Factory
 {
     /**
      * Define the model's default state.
