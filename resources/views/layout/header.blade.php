@@ -21,13 +21,13 @@
                             <i class="bi bi-instagram"></i> Mes posts
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item me-0">
                         <a href="{{ route('logout@process') }}" class="btn btn-sm btn-secondary">
                             <i class="bi bi-door-closed"></i> Déconnexion
                         </a>
                     </li>
                 @else
-                    <li class="nav-item">
+                    <li class="nav-item me-0">
                         <a href="{{ $authorizeUrl }}" class="btn btn-sm btn-info">
                             <i class="bi bi-instagram"></i> Connexion Instagram
                         </a>
