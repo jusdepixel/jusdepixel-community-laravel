@@ -15,8 +15,8 @@ class InstagramPost extends Model
 
     protected string $ig_id;
     protected string $media_id;
-    protected string $type;
-    protected string $url;
+    protected string $media_type;
+    protected string $media_url;
     protected string $username;
     protected \DateTime $timestamp;
 }

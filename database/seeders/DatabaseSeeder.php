@@ -16,10 +16,5 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         InstagramPost::factory(3)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

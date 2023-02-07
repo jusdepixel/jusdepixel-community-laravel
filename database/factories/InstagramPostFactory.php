@@ -18,11 +18,10 @@ class InstagramPostFactory extends Factory
     public function definition(): array
     {
         return [
-            'social_network' => fake()->company,
-            'social_id' => fake()->uuid,
+            'ig_id' => fake()->uuid,
             'media_id' => fake()->uuid,
-            'type' => "IMAGE",
-            'url' => fake()->url,
+            'media_type' => "IMAGE",
+            'media_url' => fake()->url,
             'username' => fake()->userName,
             'timestamp' => fake()->dateTime,
         ];

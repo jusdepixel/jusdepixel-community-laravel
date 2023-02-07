@@ -22,30 +22,36 @@ class Instagram extends Authenticate
         return $this->getSession();
     }
 
-    /**
-     * @throws GuzzleException
-     */
-    public function getPosts(): array
+    public function getPosts(): int|array
     {
-        $params = [
-            'query' => [
-                'access_token' => $this->getSession()->accessToken,
-                'fields' => 'id,media_type,media_url,username,timestamp'
-            ]
-        ];
+        try {
+            $params = [
+                'query' => [
+                    'access_token' => $this->getSession()->accessToken,
+                    'fields' => 'id,media_type,media_url,username,timestamp'
+                ]
+            ];
 
-        $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . self::MEDIAS_URI, $params);
-        return  json_decode($response->getBody()->getContents())->data;
+            $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . self::MEDIAS_URI, $params);
+            $posts = json_decode($response->getBody()->getContents())->data;
 
-//            foreach($medias as $media) {
+//            foreach($posts as $post) {
 //                InstagramPost::factory()->create([
 //                    'ig_id' => $this->getSession()->socialId,
-//                    'media_id' => $media->id,
-//                    'type' => $media->media_type,
-//                    'url' => $media->media_url,
-//                    'username' => $media->username,
-//                    'timestamp' => $media->timestamp,
+//                    'media_id' => $post->id,
+//                    'media_type' => $post->media_type,
+//                    'media_url' => $post->media_url,
+//                    'username' => $post->username,
+//                    'timestamp' => $post->timestamp,
 //                ]);
 //            }
+
+            return  $posts;
+
+        } catch (GuzzleException $e) {
+            return $e->getCode();
+        }
+
+
     }
 }

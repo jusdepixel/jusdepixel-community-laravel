@@ -6,6 +6,7 @@ namespace App\Instagram;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class Initialize
 {
@@ -20,10 +21,8 @@ class Initialize
     protected string $redirectUri;
     protected string $clientSecret;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->setRequest($request);
-
         if ($this->getSession() === null) {
             $this->setSession([
                 'isAuthenticated' => false,
@@ -53,22 +52,22 @@ class Initialize
         return $this;
     }
 
-    private function setRequest($request): void
-    {
-        $this->request = $request;
-    }
-
     protected function setSession(array $session): void
     {
-        $this->request->session()->put('social_network', json_encode($session));
+       Session::put('social_network', json_encode($session));
     }
 
     protected function getSession(): ?object
     {
-        if ($this->request->session()->get('social_network')) {
-            return json_decode($this->request->session()->get('social_network'));
+        if (Session::get('social_network')) {
+            return json_decode(Session::get('social_network'));
         }
 
         return null;
+    }
+
+    protected function forgetSession(): void
+    {
+        Session::forget('social_network');
     }
 }

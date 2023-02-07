@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->integer('ig_id');
             $table->integer('media_id');
-            $table->string('type');
-            $table->string('url');
+            $table->string('media_type');
+            $table->string('media_url');
             $table->string('username');
             $table->timestamp('timestamp');
         });

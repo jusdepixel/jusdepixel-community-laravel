@@ -11,7 +11,15 @@ class AuthenticateController extends InstagramController
 {
     public function process($code): RedirectResponse
     {
-        $this->instagram->authenticate($code);
+        $authentication = $this->instagram->authenticate($code);
+
+        if ($authentication === 400) {
+            $this->instagram->logout();
+            return redirect()
+                ->route('home@process')
+                ->with('message', 'Impossible de récupérer un token depuis Instagram, veuillez nous contacter.')
+                ->with('alert-class', 'alert-error');
+        }
 
         return redirect()->route('me@process');
     }

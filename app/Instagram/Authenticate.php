@@ -10,75 +10,78 @@ class Authenticate extends Initialize
 {
     private string $code;
 
-    public function authenticate(string $code): void
+    public function authenticate(string $code): int
     {
-        $this
+        return $this
             ->setCode($code)
             ->requestToken()
             ->requestProfile()
         ;
     }
 
-    /**
-     * @throws GuzzleException
-     */
-    public function requestToken(): self
+    public function requestToken(): int|self
     {
-        $params = [
-            'form_params' => [
-                'client_id' => $this->clientId,
-                'client_secret' => $this->clientSecret,
-                'grant_type' => 'authorization_code',
-                'redirect_uri' => $this->redirectUri,
-                'code' => $this->code
-            ]
-        ];
+        try {
+            $params = [
+                'form_params' => [
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'grant_type' => 'authorization_code',
+                    'redirect_uri' => $this->redirectUri,
+                    'code' => $this->code
+                ]
+            ];
 
-        $response = $this->clientGuzzle->request('POST', self::TOKEN_URL, $params);
-        $result = json_decode($response->getBody()->getContents());
+            $response = $this->clientGuzzle->request('POST', self::TOKEN_URL, $params);
+            $result = json_decode($response->getBody()->getContents());
 
-        $this->setSession([
-            'isAuthenticated' => true,
-            'socialId' => $result->user_id,
-            'accessToken' => $result->access_token
-        ]);
+            $this->setSession([
+                'isAuthenticated' => true,
+                'socialId' => $result->user_id,
+                'accessToken' => $result->access_token
+            ]);
+        } catch (GuzzleException $exception) {
+            return $exception->getCode();
+        }
 
         return $this;
     }
 
-    /**
-     * @throws GuzzleException
-     */
-    private function requestProfile(): void
+    private function requestProfile(): int
     {
-        $params = [
-            'query' => [
-                'access_token' => $this->getSession()->accessToken,
-                'fields' => 'account_type,media_count,username'
-            ]
-        ];
+        try {
+            $params = [
+                'query' => [
+                    'access_token' => $this->getSession()->accessToken,
+                    'fields' => 'account_type,media_count,username'
+                ]
+            ];
 
-        $response = $this->clientGuzzle->request(
-            'GET',
-            self::GRAPH_URL . $this->getSession()->socialId,
-            $params
-        );
+            $response = $this->clientGuzzle->request(
+                'GET',
+                self::GRAPH_URL . $this->getSession()->socialId,
+                $params
+            );
 
-        $profile = json_decode($response->getBody()->getContents());
+            $profile = json_decode($response->getBody()->getContents());
 
-        $this->setSession([
-            'isAuthenticated' => $this->getSession()->isAuthenticated,
-            'socialId' => $this->getSession()->socialId,
-            'accessToken' => $this->getSession()->accessToken,
-            'accountType' => $profile->account_type,
-            'mediaCount' => $profile->media_count,
-            'username' => $profile->username,
-        ]);
+            $this->setSession([
+                'isAuthenticated' => $this->getSession()->isAuthenticated,
+                'socialId' => $this->getSession()->socialId,
+                'accessToken' => $this->getSession()->accessToken,
+                'accountType' => $profile->account_type,
+                'mediaCount' => $profile->media_count,
+                'username' => $profile->username,
+            ]);
+            return 0;
+        } catch (GuzzleException $e) {
+            return $e->getCode();
+        }
     }
 
     public function logout(): void
     {
-        $this->request->session()->forget('social_network');
+        $this->forgetSession();
     }
 
     private function setCode(string $code): self
