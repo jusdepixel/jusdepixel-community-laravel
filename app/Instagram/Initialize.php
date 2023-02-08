@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Instagram;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class Initialize
@@ -15,7 +14,6 @@ class Initialize
     protected const GRAPH_URL = "https://graph.instagram.com/";
     protected const MEDIAS_URI = "/me/media";
 
-    protected Request $request;
     protected Client $clientGuzzle;
     protected string $clientId;
     protected string $redirectUri;

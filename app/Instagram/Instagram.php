@@ -9,14 +9,6 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class Instagram extends Authenticate
 {
-    public function getAuthorizeUrl(): string
-    {
-        return
-            self::AUTHORIZE_URL .
-            "?client_id=$this->clientId&redirect_uri=$this->redirectUri&scope=user_profile,user_media&response_type=code"
-        ;
-    }
-
     public function getProfile(): object
     {
         return $this->getSession();
@@ -51,7 +43,5 @@ class Instagram extends Authenticate
         } catch (GuzzleException $e) {
             return $e->getCode();
         }
-
-
     }
 }
