@@ -7,7 +7,7 @@ namespace App\Instagram;
 use App\Models\InstagramPost;
 use GuzzleHttp\Exception\GuzzleException;
 
-class Instagram extends Authenticate
+final class Instagram extends Authenticate
 {
     public function getProfile(): object
     {

@@ -19,7 +19,8 @@ class MeController extends InstagramController
             return redirect()
                 ->route('home@process')
                 ->with('message', 'Votre session Instagram a expiré, veuillez vous reconnecter.')
-                ->with('alert-class', 'alert-info');
+                ->with('alert-class', 'alert-info')
+                ->setStatusCode(403);
         }
 
         return view('pages/me', [

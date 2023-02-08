@@ -33,7 +33,7 @@ class Initialize
         }
     }
 
-    public function initialize(): void
+    public function initialize(): self
     {
         $this->clientId = config('instagram.client_id');
         $this->clientSecret = config('instagram.client_secret');
@@ -42,6 +42,8 @@ class Initialize
         $this
             ->setClientGuzzle()
             ->getSession();
+
+        return $this;
     }
 
     private function setClientGuzzle(): self
@@ -55,7 +57,7 @@ class Initialize
        Session::put('social_network', json_encode($session));
     }
 
-    protected function getSession(): ?object
+    public function getSession(): ?object
     {
         if (Session::get('social_network')) {
             return json_decode(Session::get('social_network'));
@@ -67,5 +69,31 @@ class Initialize
     protected function forgetSession(): void
     {
         Session::forget('social_network');
+    }
+
+
+    /**
+     * @required by tests
+     */
+
+    public function getClientId(): string
+    {
+        return $this->clientId;
+    }
+
+    public function getClientGuzzle(): Client
+    {
+        return $this->clientGuzzle;
+    }
+
+
+    public function getRedirectUri(): string
+    {
+        return $this->redirectUri;
+    }
+
+    public function getClientSecret(): string
+    {
+        return $this->clientSecret;
     }
 }

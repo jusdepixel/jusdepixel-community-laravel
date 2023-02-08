@@ -8,15 +8,29 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class Authenticate extends Initialize
 {
-    private string $code;
+    public string $code;
 
-    public function authenticate(string $code): int
+    public function authenticate(?string $code): int
     {
-        return $this
+        if (!isset($code)) {
+            return 204;
+        }
+
+         $token = $this
             ->setCode($code)
-            ->requestToken()
-            ->requestProfile()
-        ;
+            ->requestToken();
+
+         if ($token === 400) {
+             return 400;
+         }
+
+         $profile = $this->requestProfile();
+
+         if ($profile === 400) {
+             return 498;
+         }
+
+         return $profile;
     }
 
     public function requestAuthorizeUrl(): string
@@ -55,7 +69,7 @@ class Authenticate extends Initialize
         return $this;
     }
 
-    private function requestProfile(): int
+    public function requestProfile(): int
     {
         try {
             $params = [
@@ -92,7 +106,7 @@ class Authenticate extends Initialize
         $this->forgetSession();
     }
 
-    private function setCode(string $code): self
+    public function setCode(?string $code): self
     {
         $this->code = str_replace('#_', '', $code);
         return $this;

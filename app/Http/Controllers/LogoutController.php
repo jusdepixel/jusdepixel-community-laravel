@@ -16,6 +16,7 @@ class LogoutController extends InstagramController
         return redirect()
             ->route('home@process')
             ->with('message', 'Vous avez bien été déconnecté de votre compte Instagram.')
-            ->with('alert-class', 'alert-info');;
+            ->with('alert-class', 'alert-info')
+            ->setStatusCode(204);;
     }
 }
