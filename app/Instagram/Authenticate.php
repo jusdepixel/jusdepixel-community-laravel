@@ -19,6 +19,14 @@ class Authenticate extends Initialize
         ;
     }
 
+    public function requestAuthorizeUrl(): string
+    {
+        return
+            self::AUTHORIZE_URL .
+            "?client_id=$this->clientId&redirect_uri=$this->redirectUri&scope=user_profile,user_media&response_type=code"
+            ;
+    }
+
     public function requestToken(): int|self
     {
         try {

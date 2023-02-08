@@ -9,9 +9,9 @@ use Illuminate\Http\RedirectResponse;
 
 class AuthenticateController extends InstagramController
 {
-    public function process($code): RedirectResponse
+    public function process(): RedirectResponse
     {
-        $authentication = $this->instagram->authenticate($code);
+        $authentication = $this->instagram->authenticate($this->request->get('code'));
 
         if ($authentication === 400) {
             $this->instagram->logout();
