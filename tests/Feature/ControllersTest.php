@@ -5,11 +5,11 @@ use Tests\TestCase;
 class ControllersTest extends TestCase
 {
     /** Route home@process */
-//    public function test_get_home(): void
-//    {
-//        $response = $this->get('/');
-//        $response->assertStatus(200);
-//    }
+    public function test_get_home(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+    }
 
     /** Route me@process */
     public function test_get_me_no_authtenticated(): void
