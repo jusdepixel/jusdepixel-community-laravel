@@ -7,6 +7,7 @@ class ControllersTest extends TestCase
     /** Route home@process */
     public function test_get_home(): void
     {
+        $this->withoutVite();
         $response = $this->get('/');
         $response->assertStatus(200);
     }
