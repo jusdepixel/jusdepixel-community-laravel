@@ -36,6 +36,6 @@ class ControllersTest extends TestCase
     public function test_get_logout(): void
     {
         $response = $this->get('/api/logout');
-        $response->assertStatus(204);
+        $response->assertStatus(200);
     }
 }

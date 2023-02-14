@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instagram_posts', function (Blueprint $table) {
+        Schema::create('instagram_users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
             $table->integer('ig_id');
-            $table->string('media_id');
-            $table->string('media_type');
-            $table->string('media_url');
             $table->string('username');
-            $table->timestamp('timestamp');
+            $table->integer('media_count');
         });
     }
 
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instagram_posts');
+        Schema::dropIfExists('instagram_users');
     }
 };

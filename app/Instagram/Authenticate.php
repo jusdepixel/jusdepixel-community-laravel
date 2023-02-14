@@ -6,7 +6,7 @@ namespace App\Instagram;
 
 use GuzzleHttp\Exception\GuzzleException;
 
-class Authenticate extends Initialize
+class Authenticate extends User
 {
     public string $code;
 
@@ -50,7 +50,7 @@ class Authenticate extends Initialize
 
             $this->setSession([
                 'isAuthenticated' => true,
-                'socialId' => $result->user_id,
+                'igId' => $result->user_id,
                 'accessToken' => $result->access_token
             ]);
             return true;
@@ -72,22 +72,13 @@ class Authenticate extends Initialize
 
             $response = $this->clientGuzzle->request(
                 'GET',
-                self::GRAPH_URL . $this->getSession()->socialId,
+                self::GRAPH_URL . $this->getSession()->igId,
                 $params
             );
 
-            $profile = json_decode($response->getBody()->getContents());
+            $this->setProfile(json_decode($response->getBody()->getContents()));
 
-            $session = [
-                'isAuthenticated' => $this->getSession()->isAuthenticated,
-                'socialId' => $this->getSession()->socialId,
-                'accessToken' => $this->getSession()->accessToken,
-                'accountType' => $profile->account_type,
-                'mediaCount' => $profile->media_count,
-                'username' => $profile->username,
-            ];
-            $this->setSession($session);
-            return $session;
+            return (array) $this->getProfile();
 
         } catch (GuzzleException $e) {
             return $e;

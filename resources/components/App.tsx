@@ -17,7 +17,7 @@ type propsProfile = {
     accountType: string,
     isAuthenticated: boolean,
     mediaCount: number,
-    socialId: number,
+    igId: number,
     username: string
 }
 export default function App() {
@@ -28,7 +28,7 @@ export default function App() {
         accountType: "",
         isAuthenticated: false,
         mediaCount: 0,
-        socialId: 0,
+        igId: 0,
         username: "Anonymous"
     })
 

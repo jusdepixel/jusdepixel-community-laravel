@@ -20,7 +20,7 @@ class Initialize
     protected string $clientSecret;
     protected array $session = [
         'isAuthenticated' => false,
-        'socialId' => null,
+        'igId' => null,
         'accessToken' => null,
         'accountType' => null,
         'mediaCount' => null,

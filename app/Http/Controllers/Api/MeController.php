@@ -20,7 +20,7 @@ class MeController extends InstagramController
                 case 400:
                     $this->instagram->logout();
                     return response()->json([
-                        'message' => 'Session Instagram expirée.'
+                        'message' => 'Session Instagram expirée, veuillez vous connecter.'
                     ], $posts->getCode());
 
                 case 403:
@@ -52,7 +52,7 @@ class MeController extends InstagramController
         $sharedPosts = [];
 
         $posts = InstagramPost::select('media_id')
-            ->where('ig_id', $this->instagram->getSession()->socialId)
+            ->where('ig_id', $this->instagram->getSession()->igId)
             ->get();
 
         if ($posts) {

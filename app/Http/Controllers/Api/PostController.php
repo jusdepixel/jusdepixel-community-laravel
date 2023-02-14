@@ -24,13 +24,22 @@ class PostController extends InstagramController
 
         try {
             InstagramPost::factory()->create([
-                'ig_id' => $this->instagram->getSession()->socialId,
+                'ig_id' => $this->instagram->getSession()->igId,
                 'media_id' => $post->id,
                 'media_type' => $post->media_type,
                 'media_url' => $post->media_url,
                 'username' => $post->username,
                 'timestamp' => $post->timestamp
             ]);
+
+            try {
+                (new UserController($this->instagram, $this->request))->create();
+
+            } catch (ModelNotFoundException $e) {
+                return response()->json([
+                    'message' => $e->getMessage()
+                ], $e->getCode());
+            }
 
             return response()->json([
                 'message' => 'Le post est maintenant partagé.'
@@ -46,7 +55,7 @@ class PostController extends InstagramController
     public function delete(int $id): JsonResponse
     {
         try {
-            $res = InstagramPost::where('media_id', $id)
+            InstagramPost::where('media_id', $id)
                 ->delete();
 
             return response()->json([
