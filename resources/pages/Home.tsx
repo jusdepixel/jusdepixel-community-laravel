@@ -52,11 +52,7 @@ export default function Home() {
             :
                 <Navigate to="/error" state={result} />
         :
-            <>
-                <h3><i className="bi bi-share"></i> Community</h3>
-                <h6 className="text-secondary">Les derniers partages de la communauté !</h6>
-                <p className="loading">Chargement...</p>
-            </>
+            <></>
         )
     )
 }

@@ -38,32 +38,46 @@ export default function Post({post, page} : {post: any, page: string}) {
             <div id={"post-" + post.id} className={`post  ${classCss}`}>
 
                 <div className={"post-front"}>
-                    <picture className="mb-3">
+                    <picture>
                         <img src={post.media_url} alt="{post.username}" width="100%" />
                     </picture>
-                    <span className="username">{post.username}</span>
-                    <span className="timestamp">{post.timestamp}</span>
+                    <div>
+                        <span className="type"><i className="bi bi-image me-2"></i>{post.media_type}</span>
+                        <span className="username">{post.username}</span>
+                        <span className="timestamp">{post.timestamp}</span>
 
-                    {(page === "me" &&
-                        <button
-                            className="btn btn-info mt-3 btn-sm"
-                            data-post={post.id}
-                            onClick={handleCreate}
-                        >
-                            <i className="bi bi-share me-2"></i>Partager
-                        </button>
-                    )}
+                        {(page === "me" &&
+                            <button
+                                className="btn btn-info mt-3 btn-sm"
+                                data-post={post.id}
+                                onClick={handleCreate}
+                            >
+                                <i className="bi bi-share me-2"></i>Partager
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 <div className={"post-back"}>
                     {(page === "me" &&
-                        <button
-                            className="btn btn-info mt-3 btn-sm"
-                            data-post={post.id}
-                            onClick={handleDelete}
-                        >
-                            <i className="bi bi-share me-2"></i>Supprimer
-                        </button>
+                        <>
+                            <picture>
+                                <img src={post.media_url} alt="{post.username}" width="100%" />
+                            </picture>
+                            <div>
+                                <span className="type"><i className="bi bi-image me-2"></i>{post.media_type}</span>
+                                <span className="username">{post.username}</span>
+                                <span className="timestamp">{post.timestamp}</span>
+
+                                <button
+                                    className="btn btn-info mt-3 btn-sm bg-danger"
+                                    data-post={post.id}
+                                    onClick={handleDelete}
+                                >
+                                    <i className="bi bi-x-lg me-2"></i>Supprimer le partage
+                                </button>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>

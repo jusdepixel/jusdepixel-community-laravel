@@ -55,8 +55,8 @@ export default function Me({profile, setProfile} : {profile: any, setProfile: an
         (!isLoading ?
             (result.code === 200) ?
                 <>
-                    <h3><i className="bi bi-instagram"></i> {profile.username}</h3>
-                    <h6 className="text-secondary">{posts.length} post{posts.length > 1 ? 's' : ''}</h6>
+                    <h3><i className="bi bi-instagram"></i> Mon Instagram</h3>
+                    <h6 className="text-secondary">{profile.username} - {posts.length} post{posts.length > 1 ? 's' : ''}</h6>
                     <div className="row mt-5 mb-3">
                         {posts.map((post: Post) => <Post key={post.id} post={post} page={"me"} />)}
                     </div>
@@ -64,11 +64,7 @@ export default function Me({profile, setProfile} : {profile: any, setProfile: an
             :
                 <Navigate to={"/error"} state={{result}} />
         :
-            <>
-                <h3><i className="bi bi-share"></i> {profile.username}</h3>
-                <h6 className="text-secondary">{posts.length} post{posts.length > 1 ? 's' : ''}</h6>
-                <p className="loading">Chargement...</p>
-            </>
+            <></>
         )
     )
 }
