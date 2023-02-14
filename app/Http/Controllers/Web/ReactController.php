@@ -10,6 +10,6 @@ class ReactController
 {
     public function process(): View
     {
-        return view('react/index');
+        return view('index');
     }
 }

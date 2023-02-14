@@ -1,3 +1,5 @@
+<!doctype html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,3 +9,7 @@
     @vite('resources/index.tsx')
     <title>@yield('title')</title>
 </head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
