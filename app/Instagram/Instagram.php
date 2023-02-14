@@ -54,6 +54,6 @@ final class Instagram extends Authenticate
             }
         }
 
-        return json_decode(Cache::get($key))->data;
+        return json_decode(Cache::get($key));
     }
 }
