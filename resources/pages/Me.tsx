@@ -16,10 +16,11 @@ type result = {
     code: number,
     status?: string
     message?: string,
-    more?: string
+    more?: string,
+    profile?: any,
 }
 
-export default function Me({profile} : {profile: any}) {
+export default function Me({profile, setProfile} : {profile: any, setProfile: any}) {
     const [posts, setPosts] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [result, setResult] = useState<result>({code: 0, message: 'Not initialized'})
@@ -37,9 +38,15 @@ export default function Me({profile} : {profile: any}) {
                         code: error.response.status,
                         message: error.message,
                         status: error.response.statusText,
-                        more: error.response.data.message
+                        more: error.response.data.message,
+                        profile: error.response.data.profile
                     })
+
                     setLoading(false)
+
+                    if (error.response.data.profile) {
+                        setProfile(error.response.data.profile)
+                    }
                 })
         }
     })

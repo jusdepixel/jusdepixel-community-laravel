@@ -20,7 +20,8 @@ class MeController extends InstagramController
                 case 400:
                     $this->instagram->logout();
                     return response()->json([
-                        'message' => 'Session Instagram expirée, veuillez vous connecter.'
+                        'message' => 'Session Instagram expirée, veuillez vous connecter.',
+                        'profile' => $this->instagram->getProfile()
                     ], $posts->getCode());
 
                 case 403:

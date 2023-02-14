@@ -71,7 +71,7 @@ export default function App() {
                             <Route path={"/auth"} element={<PageAuth setProfile={setProfile} location={location} />} />
                             <Route path={"/me"} element={<PageMe profile={profile} />} />
                             <Route path={"/logout"} element={<PageLogout setProfile={setProfile} />} />
-                            <Route path={"/error"} element={<PageError />} />
+                            <Route path={"/error"} element={<PageError setProfile={setProfile}/>} />
                         </Routes>
                     </main>
                 </>
