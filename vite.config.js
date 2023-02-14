@@ -12,17 +12,11 @@ export default defineConfig({
                 'routes/**',
                 'resources/routes/**',
                 'resources/views/**',
-                'resources/views/**/**',
-                'resources/components/**/**',
-                'resources/scss/**/**'
+                'resources/pages/**',
+                'resources/components/**',
+                'resources/scss/**'
             ]
         }),
         react(),
-    ],
-    // server: {
-    //     host: '127.0.0.1',
-    //         watch: {
-    //         usePolling: true,
-    //     },
-    // },
+    ]
 });
