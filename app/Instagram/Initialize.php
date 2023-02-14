@@ -53,7 +53,7 @@ class Initialize
         return $this;
     }
 
-    protected function setSession(array $session): void
+    public function setSession(array $session): void
     {
        Session::put('social_network', json_encode($session));
     }

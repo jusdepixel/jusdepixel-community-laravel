@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Instagram\Instagram;
+use GuzzleHttp\Exception\ClientException;
 use Tests\TestCase;
 
 class InstagramAuthenticateTest extends TestCase
@@ -22,7 +23,8 @@ class InstagramAuthenticateTest extends TestCase
             ->setCode('fake_code')
             ->requestToken();
 
-        $this->assertEquals(400, $response);
+        $this->assertEquals(true, $response instanceof ClientException);
+        $this->assertEquals(400, $response->getCode());
     }
 
     public function test_request_profile(): void
@@ -31,7 +33,8 @@ class InstagramAuthenticateTest extends TestCase
             ->initialize()
             ->requestProfile();
 
-        $this->assertEquals(400, $response);
+        $this->assertEquals(true, $response instanceof ClientException);
+        $this->assertEquals(400, $response->getCode());
     }
 
     public function test_authenticate_no_code(): void
@@ -45,26 +48,40 @@ class InstagramAuthenticateTest extends TestCase
     {
         $response = (new Instagram())->initialize()->authenticate('fake_code');
 
-        $this->assertEquals(400, $response);
+
+        $this->assertEquals(true, $response instanceof ClientException);
+        $this->assertEquals(400, $response->getCode());
     }
 
     public function test_logout(): void
     {
-        $response = (new Instagram())->initialize();
-        $session = json_encode([
+        $profile = [
+            'isAuthenticated' => true,
+            'socialId' => 'socialId',
+            'accessToken' => 'accessToken',
+            'accountType' => 'accountType',
+            'mediaCount' => 42,
+            'username' => 'MyName'
+        ];
+        $instagram = (new Instagram());
+        $instagram
+            ->initialize()
+            ->setSession($profile);
+
+        $this->assertEquals($profile, (array) $instagram->getSession());
+
+        $instagram->logout();
+
+        $expected = [
             'isAuthenticated' => false,
             'socialId' => null,
             'accessToken' => null,
             'accountType' => null,
             'mediaCount' => null,
             'username' => 'Anonymous'
-        ]);
+        ];
 
-        $this->assertEquals(json_decode($session), $response->getSession());
-
-        $response->logout();
-
-        $this->assertEquals(null, $response->getSession());
+        $this->assertEquals($expected, (array) $instagram->getSession());
     }
 
     public function test_set_code(): void
