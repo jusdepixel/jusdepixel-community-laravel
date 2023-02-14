@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Instagram;
 
-use App\Models\InstagramPost;
 use GuzzleHttp\Exception\GuzzleException;
 
 final class Instagram extends Authenticate
@@ -14,7 +13,7 @@ final class Instagram extends Authenticate
         return $this->getSession();
     }
 
-    public function getPosts(): int|array
+    public function getPosts(): array|GuzzleException
     {
         try {
             $params = [
@@ -25,23 +24,30 @@ final class Instagram extends Authenticate
             ];
 
             $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . self::MEDIAS_URI, $params);
-            $posts = json_decode($response->getBody()->getContents())->data;
-
-//            foreach($posts as $post) {
-//                InstagramPost::factory()->create([
-//                    'ig_id' => $this->getSession()->socialId,
-//                    'media_id' => $post->id,
-//                    'media_type' => $post->media_type,
-//                    'media_url' => $post->media_url,
-//                    'username' => $post->username,
-//                    'timestamp' => $post->timestamp,
-//                ]);
-//            }
-
-            return  $posts;
+            return json_decode($response->getBody()->getContents())->data;
 
         } catch (GuzzleException $e) {
-            return $e->getCode();
+            return $e;
+        }
+    }
+    public function getPost(int $id): object
+    {
+        try {
+            $params = [
+                'query' => [
+                    'access_token' => $this->getSession()->accessToken,
+                    'fields' => 'id,media_type,media_url,username,timestamp'
+                ]
+            ];
+
+            $response = $this->clientGuzzle->request(
+                'GET',
+                self::GRAPH_URL . $id, $params
+            );
+            return json_decode($response->getBody()->getContents());
+
+        } catch (GuzzleException $e) {
+            return $e;
         }
     }
 }

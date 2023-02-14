@@ -10,15 +10,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InstagramPostFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'ig_id' => fake()->uuid,
+            'ig_id' => fake()->numerify,
             'media_id' => fake()->uuid,
             'media_type' => "IMAGE",
             'media_url' => fake()->url,

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->timestamps();
             $table->integer('ig_id');
-            $table->integer('media_id');
+            $table->string('media_id');
             $table->string('media_type');
             $table->string('media_url');
             $table->string('username');
