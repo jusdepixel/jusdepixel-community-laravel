@@ -6,13 +6,8 @@ namespace App\Instagram;
 
 use GuzzleHttp\Exception\GuzzleException;
 
-final class Instagram extends Authenticate
+final class Instagram extends User
 {
-    public function getProfile(): object
-    {
-        return $this->getSession();
-    }
-
     public function getPosts(): array|GuzzleException
     {
         try {
