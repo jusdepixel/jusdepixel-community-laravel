@@ -5,44 +5,55 @@ declare(strict_types=1);
 namespace App\Instagram;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Cache;
 
 final class Instagram extends Authenticate
 {
     public function getPosts(): array|GuzzleException
     {
-        try {
-            $params = [
-                'query' => [
-                    'access_token' => $this->getSession()->accessToken,
-                    'fields' => 'id,media_type,media_url,username,timestamp'
-                ]
-            ];
+        $key = 'posts-' . $this->getProfile()->igId;
 
-            $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . self::MEDIAS_URI, $params);
-            return json_decode($response->getBody()->getContents())->data;
+        if(! Cache::has($key)) {
+            try {
+                $params = [
+                    'query' => [
+                        'access_token' => $this->getProfile()->accessToken,
+                        'fields' => 'id,media_type,media_url,username,timestamp'
+                    ]
+                ];
 
-        } catch (GuzzleException $e) {
-            return $e;
+                $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . self::MEDIAS_URI, $params);
+                Cache::put($key, $response->getBody()->getContents());
+
+            } catch (GuzzleException $e) {
+                return $e;
+            }
         }
+
+        return json_decode(Cache::get($key))->data;
     }
+
     public function getPost(int $id): object
     {
-        try {
-            $params = [
-                'query' => [
-                    'access_token' => $this->getSession()->accessToken,
-                    'fields' => 'id,media_type,media_url,username,timestamp'
-                ]
-            ];
+        $key = 'post-' . $id;
 
-            $response = $this->clientGuzzle->request(
-                'GET',
-                self::GRAPH_URL . $id, $params
-            );
-            return json_decode($response->getBody()->getContents());
+        if(! Cache::has($key)) {
+            try {
+                $params = [
+                    'query' => [
+                        'access_token' => $this->getProfile()->accessToken,
+                        'fields' => 'id,media_type,media_url,username,timestamp'
+                    ]
+                ];
 
-        } catch (GuzzleException $e) {
-            return $e;
+                $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . $id, $params);
+                Cache::put($key, $response->getBody()->getContents());
+
+            } catch (GuzzleException $e) {
+                return $e;
+            }
         }
+
+        return json_decode(Cache::get($key))->data;
     }
 }
