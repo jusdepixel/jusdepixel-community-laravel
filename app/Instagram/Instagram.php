@@ -8,11 +8,6 @@ use GuzzleHttp\Exception\GuzzleException;
 
 final class Instagram extends Authenticate
 {
-    public function getProfile(): object
-    {
-        return $this->getSession();
-    }
-
     public function getPosts(): array|GuzzleException
     {
         try {

@@ -57,7 +57,7 @@ class InstagramAuthenticateTest extends TestCase
     {
         $profile = [
             'isAuthenticated' => true,
-            'socialId' => 'socialId',
+            'igId' => 'igId',
             'accessToken' => 'accessToken',
             'accountType' => 'accountType',
             'mediaCount' => 42,
@@ -66,7 +66,7 @@ class InstagramAuthenticateTest extends TestCase
         $instagram = (new Instagram());
         $instagram
             ->initialize()
-            ->setSession($profile);
+            ->setProfile($profile);
 
         $this->assertEquals($profile, (array) $instagram->getSession());
 
@@ -74,7 +74,7 @@ class InstagramAuthenticateTest extends TestCase
 
         $expected = [
             'isAuthenticated' => false,
-            'socialId' => null,
+            'igId' => null,
             'accessToken' => null,
             'accountType' => null,
             'mediaCount' => null,

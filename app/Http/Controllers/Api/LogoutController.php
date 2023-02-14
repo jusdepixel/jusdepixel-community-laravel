@@ -13,6 +13,6 @@ class LogoutController extends InstagramController
     {
         $this->instagram->logout();
 
-        return response()->json($this->instagram->getProfile(), 204);
+        return response()->json($this->instagram->getProfile(), 200);
     }
 }

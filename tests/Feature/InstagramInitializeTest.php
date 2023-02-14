@@ -31,7 +31,7 @@ class InstagramInitializeTest extends TestCase
 
         $expected = new stdClass();
         $expected->isAuthenticated = false;
-        $expected->socialId = null;
+        $expected->igId = null;
         $expected->accessToken = null;
         $expected->accountType = null;
         $expected->mediaCount = null;
