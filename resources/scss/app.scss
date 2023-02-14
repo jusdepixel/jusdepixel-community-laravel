@@ -1,0 +1,78 @@
+@import './jusdepixel-bootstrap/variables';
+@import 'bootstrap/scss/bootstrap';
+@import './jusdepixel-bootstrap/bootstrap';
+@import './jusdepixel-bootstrap/background';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+span.nav-link, span.nav-link:hover {
+    color: $gray-600;
+}
+
+h3 {
+    letter-spacing: 0.1rem;
+    color: $white;
+
+    & i {
+    color: $info;
+    }
+}
+
+h6 {
+    color: $gray-600;
+    padding-left: 34px;
+}
+
+.loading, .more {
+    padding-left: 34px;
+}
+
+.post {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+
+    & .post-front, & .post-back {
+        backface-visibility: hidden;
+    }
+
+    & .post-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: rotateY(180deg);
+    }
+
+    & picture {
+        display: block;
+        padding: 20px 10px;
+        background-color: $black;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    & span {
+        display: block;
+
+        &.username {
+            color: $white;
+        }
+    }
+
+    & button {
+        display: block;
+        width: 100%;
+
+        &:hover {
+            background-color: $black;
+        }
+    }
+
+    &.return {
+        transform: rotateY(180deg);
+    }
+ }
+
