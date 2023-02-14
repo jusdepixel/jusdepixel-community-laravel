@@ -12,24 +12,25 @@ class Initialize
     protected const AUTHORIZE_URL = 'https://api.instagram.com/oauth/authorize';
     protected const TOKEN_URL = 'https://api.instagram.com/oauth/access_token';
     protected const GRAPH_URL = "https://graph.instagram.com/";
-    protected const MEDIAS_URI = "/me/media";
+    protected const MEDIAS_URI = "me/media";
 
     protected Client $clientGuzzle;
     protected string $clientId;
     protected string $redirectUri;
     protected string $clientSecret;
+    protected array $session = [
+        'isAuthenticated' => false,
+        'socialId' => null,
+        'accessToken' => null,
+        'accountType' => null,
+        'mediaCount' => null,
+        'username' => 'Anonymous'
+    ];
 
     public function __construct()
     {
         if ($this->getSession() === null) {
-            $this->setSession([
-                'isAuthenticated' => false,
-                'socialId' => null,
-                'accessToken' => null,
-                'accountType' => null,
-                'mediaCount' => null,
-                'username' => 'Anonymous'
-            ]);
+            $this->setSession($this->session);
         }
     }
 
@@ -69,8 +70,14 @@ class Initialize
     protected function forgetSession(): void
     {
         Session::forget('social_network');
+
+        $this->setSession($this->session);
     }
 
+    public function getClientSecret(): string
+    {
+        return $this->clientSecret;
+    }
 
     /**
      * @required by tests
@@ -90,10 +97,5 @@ class Initialize
     public function getRedirectUri(): string
     {
         return $this->redirectUri;
-    }
-
-    public function getClientSecret(): string
-    {
-        return $this->clientSecret;
     }
 }

@@ -10,27 +10,18 @@ class Authenticate extends Initialize
 {
     public string $code;
 
-    public function authenticate(?string $code): int
+    public function authenticate(?string $code): int|array|bool|GuzzleException
     {
         if (!isset($code)) {
             return 204;
         }
 
-         $token = $this
-            ->setCode($code)
-            ->requestToken();
+        $token = $this->setCode($code)->requestToken();
+        if ($token instanceof GuzzleException) {
+            return $token;
+        }
 
-         if ($token === 400) {
-             return 400;
-         }
-
-         $profile = $this->requestProfile();
-
-         if ($profile === 400) {
-             return 498;
-         }
-
-         return $profile;
+        return $this->requestProfile();
     }
 
     public function requestAuthorizeUrl(): string
@@ -41,7 +32,7 @@ class Authenticate extends Initialize
             ;
     }
 
-    public function requestToken(): int|self
+    public function requestToken(): bool|GuzzleException
     {
         try {
             $params = [
@@ -62,14 +53,14 @@ class Authenticate extends Initialize
                 'socialId' => $result->user_id,
                 'accessToken' => $result->access_token
             ]);
-        } catch (GuzzleException $exception) {
-            return $exception->getCode();
-        }
+            return true;
 
-        return $this;
+        } catch (GuzzleException $e) {
+            return $e;
+        }
     }
 
-    public function requestProfile(): int
+    public function requestProfile(): array|GuzzleException
     {
         try {
             $params = [
@@ -87,17 +78,19 @@ class Authenticate extends Initialize
 
             $profile = json_decode($response->getBody()->getContents());
 
-            $this->setSession([
+            $session = [
                 'isAuthenticated' => $this->getSession()->isAuthenticated,
                 'socialId' => $this->getSession()->socialId,
                 'accessToken' => $this->getSession()->accessToken,
                 'accountType' => $profile->account_type,
                 'mediaCount' => $profile->media_count,
                 'username' => $profile->username,
-            ]);
-            return 0;
+            ];
+            $this->setSession($session);
+            return $session;
+
         } catch (GuzzleException $e) {
-            return $e->getCode();
+            return $e;
         }
     }
 

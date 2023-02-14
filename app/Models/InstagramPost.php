@@ -13,10 +13,10 @@ class InstagramPost extends Model
     use HasFactory;
     use HasUuids;
 
-    protected string $ig_id;
+    protected int $ig_id;
     protected string $media_id;
     protected string $media_type;
     protected string $media_url;
     protected string $username;
-    protected \DateTime $timestamp;
+    protected string $timestamp;
 }
