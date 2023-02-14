@@ -13,9 +13,7 @@ class HomeController extends InstagramController
 {
     public function process(): JsonResponse
     {
-        $posts = InstagramPost::orderBy('created_at DESC')
-            ->take(12)
-            ->get();
+        $posts = InstagramPost::all();
 
         if ($posts instanceof ModelNotFoundException) {
             return response()->json([

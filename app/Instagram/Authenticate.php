@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Instagram;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Cache;
 
 class Authenticate extends User
 {
@@ -77,6 +78,7 @@ class Authenticate extends User
             );
 
             $this->setProfile(json_decode($response->getBody()->getContents()));
+            Cache::forget($this->getProfile()->igId);
 
             return (array) $this->getProfile();
 
