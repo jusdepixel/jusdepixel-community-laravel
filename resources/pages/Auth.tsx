@@ -33,7 +33,7 @@ export default function Auth({setProfile, location} : {setProfile: any, location
                 :
                 <Navigate to="/error" state={result} />
             :
-                <>Chargement</>
+                <></>
         )
     )
 }
