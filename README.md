@@ -23,6 +23,15 @@ yarn build
 php artisan migrate
 ```
 
+### Environnement
+Ajouter (ou decrypter le .env.encrypted)
+
+```
+INSTAGRAM_CLIENT_ID=INSTAGRAM_CLIENT_ID
+INSTAGRAM_CLIENT_SECRET=INSTAGRAM_CLIENT_SECRET
+INSTAGRAM_REQUEST_URI=INSTAGRAM_REQUEST_URI
+```
+
 ***
 ### Démo
 [https://community.jusdepixel.fr/](https://community.jusdepixel.fr/)
