@@ -58,7 +58,7 @@ export default function App() {
     })
 
     return (
-        <div className={isLoading ? 'loading' : 'loaded'}>
+        <div>
             <Background />
 
             {!isLoading &&
@@ -69,7 +69,7 @@ export default function App() {
                         <Routes>
                             <Route path={"/"} element={<PageHome />} />
                             <Route path={"/auth"} element={<PageAuth setProfile={setProfile} location={location} />} />
-                            <Route path={"/me"} element={<PageMe profile={profile} />} />
+                            <Route path={"/me"} element={<PageMe setProfile={setProfile} profile={profile} />} />
                             <Route path={"/logout"} element={<PageLogout setProfile={setProfile} />} />
                             <Route path={"/error"} element={<PageError setProfile={setProfile}/>} />
                         </Routes>

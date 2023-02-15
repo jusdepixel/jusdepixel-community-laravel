@@ -55,7 +55,8 @@ class PostController extends InstagramController
     public function delete(int $id): JsonResponse
     {
         try {
-            InstagramPost::where('media_id', $id)
+            InstagramPost::query()
+                ->where('media_id', $id)
                 ->delete();
 
             return response()->json([
