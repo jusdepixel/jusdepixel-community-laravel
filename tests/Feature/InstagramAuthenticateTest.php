@@ -61,7 +61,8 @@ class InstagramAuthenticateTest extends TestCase
             'accessToken' => 'accessToken',
             'accountType' => 'accountType',
             'mediaCount' => 42,
-            'username' => 'MyName'
+            'username' => 'MyName',
+            'timestamp' => 'timestamp',
         ];
         $instagram = (new Instagram());
         $instagram
@@ -78,7 +79,8 @@ class InstagramAuthenticateTest extends TestCase
             'accessToken' => null,
             'accountType' => null,
             'mediaCount' => null,
-            'username' => 'Anonymous'
+            'username' => 'Anonymous',
+            'timestamp' => null,
         ];
 
         $this->assertEquals($expected, (array) $instagram->getSession());
