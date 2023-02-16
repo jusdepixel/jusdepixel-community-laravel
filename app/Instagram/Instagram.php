@@ -27,7 +27,6 @@ final class Instagram extends Authenticate
                     self::GRAPH_URL . self::MEDIAS_URI,
                     $params
                 );
-
                 Cache::put($key, json_encode((json_decode( $response->getBody()->getContents()))->data));
 
             } catch (GuzzleException $e) {

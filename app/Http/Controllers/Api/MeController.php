@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\InstagramException;
 use App\Instagram\Controller as InstagramController;
 use App\Models\InstagramPost;
 use GuzzleHttp\Exception\GuzzleException;
@@ -16,25 +17,7 @@ class MeController extends InstagramController
         $posts =  $this->instagram->getPosts();
 
         if ($posts instanceof GuzzleException) {
-
-            switch($posts->getCode()) {
-                case 400:
-                    $this->instagram->logout();
-                    return response()->json([
-                        'message' => 'Session Instagram expirée, veuillez vous connecter.',
-                        'profile' => $this->instagram->getProfile()
-                    ], $posts->getCode());
-
-                case 403:
-                    return response()->json([
-                        'message' => 'Plafond d\'utilisation de l\'API Instagram atteint, veuillez patienter.'
-                    ], $posts->getCode());
-
-                default:
-                    return response()->json([
-                        'message' => $posts->getMessage()
-                    ], $posts->getCode());
-            }
+            return (new InstagramException())->render($posts, $this->instagram);
         }
 
         $sharedPosts = $this->getSharedPosts();

@@ -38,7 +38,6 @@ class InstagramInitializeTest extends TestCase
         $expected->username = 'Anonymous';
         $expected->timestamp = null;
 
-
         $this->assertEquals($expected, $response->getSession());
     }
 }
