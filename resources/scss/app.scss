@@ -17,8 +17,9 @@ h3 {
     }
 }
 
-h6 {
-    color: $gray-600;
+h6, .text-secondary {
+    letter-spacing: 0.1rem;
+    color: $gray-600 !important;
     padding-left: 34px;
 }
 
@@ -31,6 +32,7 @@ h6 {
     background-color: rgba(255, 255, 255, 0.1);
     transition: transform 0.5s;
     transform-style: preserve-3d;
+    color: $gray-600;
 
     & .post-front, & .post-back {
         backface-visibility: hidden;
@@ -67,15 +69,15 @@ h6 {
 
         &.timestamp {
             font-size: 0.8rem;
-            padding-top: 4px;
+            padding: 4px 0;
         }
 
         &.type {
             position: absolute;
             top: 0;
             right: 0;
-            background: rgba(255,255,255,1);
-            color: rgb(0,0,0);
+            background: $white;
+            color: $black;
             padding: 5px 8px;
             font-size: 0.8rem;
         }
@@ -85,15 +87,52 @@ h6 {
         display: block;
         width: 100%;
         margin-top: 20px;
-        color: rgb(255, 255, 255);
+        color: $white;
 
         &:hover {
             background-color: $black;
         }
     }
 
+    & .caption {
+        color: $gray-500;
+        display: inline;
+        font-size: 0.9rem;
+    }
+
+    & .permalink {
+        color: $gray-500;
+        position: relative;
+        left: 6px;
+        top: -1px;
+        font-size: 0.8rem;
+    }
+
     &.return {
         transform: rotateY(180deg);
     }
  }
+
+.infos-user {
+    position: relative;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    word-wrap: break-word;
+    color: #919aa1;
+    border-left: 4px solid $gray-600;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+
+    & span {
+        color: $white;
+    }
+
+    & i {
+        position: absolute;
+        right: 15px;
+        top: 0;
+        font-size: 2rem;
+        color:  rgba(255, 255, 255, 0.2);
+    }
+}
 

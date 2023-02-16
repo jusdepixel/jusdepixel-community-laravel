@@ -14,11 +14,10 @@ class InstagramPostFactory extends Factory
     {
         return [
             'ig_id' => fake()->numerify,
+            'timestamp' => fake()->time,
             'media_id' => fake()->uuid,
             'media_type' => "IMAGE",
             'media_url' => fake()->url,
-            'username' => fake()->userName,
-            'timestamp' => fake()->dateTime,
         ];
     }
 }

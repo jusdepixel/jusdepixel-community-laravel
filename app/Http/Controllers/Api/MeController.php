@@ -11,11 +11,12 @@ use Illuminate\Http\JsonResponse;
 
 class MeController extends InstagramController
 {
-    public function process(): JsonResponse
+    public function __invoke(): JsonResponse
     {
         $posts =  $this->instagram->getPosts();
 
         if ($posts instanceof GuzzleException) {
+
             switch($posts->getCode()) {
                 case 400:
                     $this->instagram->logout();
@@ -25,7 +26,6 @@ class MeController extends InstagramController
                     ], $posts->getCode());
 
                 case 403:
-
                     return response()->json([
                         'message' => 'Plafond d\'utilisation de l\'API Instagram atteint, veuillez patienter.'
                     ], $posts->getCode());
@@ -35,7 +35,6 @@ class MeController extends InstagramController
                         'message' => $posts->getMessage()
                     ], $posts->getCode());
             }
-
         }
 
         $sharedPosts = $this->getSharedPosts();
@@ -52,7 +51,8 @@ class MeController extends InstagramController
     {
         $sharedPosts = [];
 
-        $posts = InstagramPost::select('media_id')
+        $posts = InstagramPost::query()
+            ->select('media_id')
             ->where('ig_id', $this->instagram->getSession()->igId)
             ->get();
 

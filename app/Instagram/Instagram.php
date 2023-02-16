@@ -13,36 +13,41 @@ final class Instagram extends Authenticate
     {
         $key = 'posts-' . $this->getProfile()->igId;
 
-        if(! Cache::has($key)) {
+        if(!Cache::has($key)) {
             try {
                 $params = [
                     'query' => [
                         'access_token' => $this->getProfile()->accessToken,
-                        'fields' => 'id,media_type,media_url,username,timestamp'
+                        'fields' => 'caption,id,media_type,media_url,thumbnail_url,permalink,username,timestamp'
                     ]
                 ];
 
-                $response = $this->clientGuzzle->request('GET', self::GRAPH_URL . self::MEDIAS_URI, $params);
-                Cache::put($key, $response->getBody()->getContents());
+                $response = $this->clientGuzzle->request(
+                    'GET',
+                    self::GRAPH_URL . self::MEDIAS_URI,
+                    $params
+                );
+
+                Cache::put($key, json_encode((json_decode( $response->getBody()->getContents()))->data));
 
             } catch (GuzzleException $e) {
                 return $e;
             }
         }
 
-        return json_decode(Cache::get($key))->data;
+        return json_decode(Cache::get($key));
     }
 
     public function getPost(int $id): object
     {
         $key = 'post-' . $id;
 
-        if(! Cache::has($key)) {
+        if(!Cache::has($key)) {
             try {
                 $params = [
                     'query' => [
                         'access_token' => $this->getProfile()->accessToken,
-                        'fields' => 'id,media_type,media_url,username,timestamp'
+                        'fields' => 'caption,id,media_type,media_url,thumbnail_url,permalink,username,timestamp'
                     ]
                 ];
 

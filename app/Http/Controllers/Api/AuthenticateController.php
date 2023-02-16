@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 
 class AuthenticateController extends InstagramController
 {
-    public function process(): JsonResponse
+    public function __invoke(): JsonResponse
     {
         if ($this->request->get('code') === null) {
             return response()->json([
@@ -21,7 +21,9 @@ class AuthenticateController extends InstagramController
         $profile = $this->instagram->authenticate($this->request->get('code'));
 
         if ($profile instanceof GuzzleException) {
-            return response()->json($profile->getMessage(), $profile->getCode());
+            return response()->json([
+                "message" => $profile->getMessage(),
+            ], $profile->getCode());
         }
 
         return response()->json($profile, 200);

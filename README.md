@@ -33,5 +33,6 @@ INSTAGRAM_REQUEST_URI=INSTAGRAM_REQUEST_URI
 ```
 
 ***
-### Démo
-[https://community.jusdepixel.fr/](https://community.jusdepixel.fr/)
+### Liens
+Démo : [https://community.jusdepixel.fr/](https://community.jusdepixel.fr/)  
+Doc API : [https://community.jusdepixel.fr/request-docs](https://community.jusdepixel.fr/request-docs)
