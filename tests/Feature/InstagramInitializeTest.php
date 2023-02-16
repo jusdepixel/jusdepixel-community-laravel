@@ -36,6 +36,8 @@ class InstagramInitializeTest extends TestCase
         $expected->accountType = null;
         $expected->mediaCount = null;
         $expected->username = 'Anonymous';
+        $expected->timestamp = null;
+
 
         $this->assertEquals($expected, $response->getSession());
     }

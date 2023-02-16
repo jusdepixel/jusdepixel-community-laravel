@@ -46,24 +46,6 @@ export default function Header({profile, authorizeUrl} : {profile: any, authoriz
                     </ul>
                 </div>
             </nav>
-
-            <div className="container">
-                <div className="infos-user">
-                    <span>username: </span>{profile.username}<br />
-                    <span>isAuthenticated: </span>
-                        {profile.isAuthenticated ?
-                            <span className={"text-success"}>{profile.isAuthenticated.toString()}</span>
-                            :
-                            <span className={"text-danger"}>{profile.isAuthenticated.toString()}</span>
-                        }
-                    <br />
-                    <span>accountType: </span>{profile.account_type ? profile.account_type : "null"}<br />
-                    <span>mediaCount: </span>{profile.media_count ? profile.media_count : "0"}<br />
-                    <span>igId: </span>{profile.igId ? profile.igId : "null"}<br />
-                    <span>timestamp: </span>{profile.timestamp ? profile.timestamp : "null"}<br />
-                    <i className="bi bi-info-circle"></i>
-                </div>
-            </div>
         </header>
     )
 }
