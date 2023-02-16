@@ -22,6 +22,7 @@ class Initialize
         'isAuthenticated' => false,
         'igId' => null,
         'accessToken' => null,
+        'timestamp' => null,
         'accountType' => null,
         'mediaCount' => null,
         'username' => 'Anonymous'

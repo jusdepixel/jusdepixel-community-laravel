@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\InstagramPostCollection;
+use App\Http\Resources\InstagramPostResource;
 use App\Instagram\Controller as InstagramController;
 use App\Models\InstagramPost;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class HomeController extends InstagramController
 {
-    public function process(): JsonResponse
+    public function __invoke(): InstagramPostCollection
     {
-        $posts = InstagramPost::all();
-
-        if ($posts instanceof ModelNotFoundException) {
-            return response()->json([
-                'message' => $posts->getMessage()
-            ], $posts->getCode());
-        }
-
-        return response()->json($posts, 200);
+        return new InstagramPostCollection(
+            InstagramPost::with('user')->get()
+        );
     }
 }

@@ -52,13 +52,19 @@ class Authenticate extends User
             $this->setSession([
                 'isAuthenticated' => true,
                 'igId' => $result->user_id,
-                'accessToken' => $result->access_token
+                'accessToken' => $result->access_token,
+                'timestamp' => time(),
             ]);
             return true;
 
         } catch (GuzzleException $e) {
             return $e;
         }
+    }
+
+    public function refreshToken(): void
+    {
+
     }
 
     public function requestProfile(): array|GuzzleException
@@ -73,12 +79,12 @@ class Authenticate extends User
 
             $response = $this->clientGuzzle->request(
                 'GET',
-                self::GRAPH_URL . $this->getSession()->igId,
+                self::GRAPH_URL . "me",
                 $params
             );
 
             $this->setProfile(json_decode($response->getBody()->getContents()));
-            Cache::forget($this->getProfile()->igId);
+            Cache::forget('posts-' . $this->getProfile()->igId);
 
             return (array) $this->getProfile();
 

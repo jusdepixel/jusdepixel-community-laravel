@@ -11,6 +11,9 @@ import PageAuth from "../pages/Auth"
 import PageError from "../pages/Error"
 import PageMe from "../pages/Me"
 import PageLogout from "../pages/Logout"
+import Moment from "moment/moment";
+
+Moment.locale('fr')
 
 type propsProfile = {
     accessToken: string,
@@ -20,6 +23,7 @@ type propsProfile = {
     igId: number,
     username: string
 }
+
 export default function App() {
     const [isLoading, setLoading] = useState<boolean>(true)
     const [authorizeUrl, setAuthorizeUrl] = useState<string>("")
@@ -68,7 +72,7 @@ export default function App() {
                     <main className="container mt-5 mb-5">
                         <Routes>
                             <Route path={"/"} element={<PageHome />} />
-                            <Route path={"/auth"} element={<PageAuth setProfile={setProfile} location={location} />} />
+                            <Route path={"/auth"} element={<PageAuth setProfile={setProfile} profile={profile} location={location} />} />
                             <Route path={"/me"} element={<PageMe setProfile={setProfile} profile={profile} />} />
                             <Route path={"/logout"} element={<PageLogout setProfile={setProfile} />} />
                             <Route path={"/error"} element={<PageError setProfile={setProfile}/>} />

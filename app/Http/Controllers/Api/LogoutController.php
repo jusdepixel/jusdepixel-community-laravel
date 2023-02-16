@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 class LogoutController extends InstagramController
 {
-    public function process(): JsonResponse
+    public function __invoke(): JsonResponse
     {
         $this->instagram->logout();
 

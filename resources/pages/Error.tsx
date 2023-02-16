@@ -7,7 +7,7 @@ export default function Error({setProfile} : {setProfile: any}) {
     const {state} = useLocation()
     const {result} = state
 
-    if (result.code === 400) {
+    if (result && result.code === 400) {
         if (isLoading) {
             axios.get('/api/logout').then(r => {
                 result.status = "Bad Request"
@@ -16,20 +16,23 @@ export default function Error({setProfile} : {setProfile: any}) {
                 setLoading(false)
             })
         }
+    } else if (result) {
+        setLoading(false)
     }
 
     return (
-        result !== undefined ? (
+
+        (!isLoading ?
                 <>
                     <h3><i className="bi bi-bug"></i> Erreur {result.code}: {result.status}</h3>
                     <h6 className="text-secondary">{result.message}</h6>
                     {result.more && <p className={"more"}>{result.more}</p>}
                 </>
-            )
         :
             <>
                 <h3><i className="bi bi-bug"></i> Erreur</h3>
                 <h6 className="text-secondary">Erreur inconnue...</h6>
             </>
-)
+        )
+    )
 }

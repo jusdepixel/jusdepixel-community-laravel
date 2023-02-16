@@ -28,7 +28,7 @@ export default function Home() {
         if (isLoading) {
             axios.get('/api/home')
                 .then((response) => {
-                    setPosts(response.data)
+                    setPosts(response.data.data)
                     setResult({code: response.status, message: null})
                     setLoading(false)
                 })

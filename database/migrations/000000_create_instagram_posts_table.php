@@ -6,30 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up(): void
     {
         Schema::create('instagram_posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->timestamps();
-            $table->integer('ig_id');
+            $table->foreignId('ig_id');
+            $table->timestamp('timestamp');
+            $table->timestamp('caption')->nullable();
+            $table->timestamp('permalink');
             $table->string('media_id');
             $table->string('media_type');
             $table->string('media_url');
-            $table->string('username');
-            $table->timestamp('timestamp');
+            $table->string('thumbnail_url')->nullable();
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down(): void
     {
         Schema::dropIfExists('instagram_posts');

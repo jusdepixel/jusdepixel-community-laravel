@@ -7,12 +7,12 @@ type result = {
     message: string|null
 }
 
-export default function Auth({setProfile, location} : {setProfile: any, location: any}) {
+export default function Auth({profile, setProfile, location} : {profile: any, setProfile: any, location: any}) {
     const [isLoading, setLoading] = useState(true)
     const [result, setResult] = useState<result>({code: 0, message: 'Not initialized'})
 
     React.useEffect(() => {
-        if (isLoading) {
+        if (isLoading && !profile.isAuthenticated) {
             axios.get('/api/authenticate' + location.search)
                 .then((response) => {
                     setProfile(response.data)

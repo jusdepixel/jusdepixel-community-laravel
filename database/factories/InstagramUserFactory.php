@@ -14,8 +14,10 @@ class InstagramUserFactory extends Factory
     {
         return [
             'ig_id' => fake()->numerify,
+            'timestamp' => fake()->time,
             'username' => fake()->userName,
             'media_count' => fake()->numerify,
+            'token' => fake()->text,
         ];
     }
 }
