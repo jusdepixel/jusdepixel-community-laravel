@@ -7,16 +7,16 @@ namespace App\Http\Controllers\Api;
 use App\Instagram\Controller as InstagramController;
 use App\Models\InstagramPost;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class PostController extends InstagramController
 {
-    public function create(int $id): JsonResponse
+    public function create(int $id): Response
     {
         $post = $this->instagram->getPost($id);
 
         if ($post instanceof GuzzleException) {
-            return response()->json([
+            return response([
                 'message' => $post->getMessage()
             ], $post->getCode());
         }
@@ -34,19 +34,15 @@ class PostController extends InstagramController
 
         (new UserController($this->instagram, $this->request))->create();
 
-        return response()->json([
-            'message' => 'Le post est maintenant partagé.'
-        ], 200);
+        return response(['message' => 'Le post est maintenant partagé.']);
     }
 
-    public function delete(int $id): JsonResponse
+    public function delete(int $id): Response
     {
         InstagramPost::query()
             ->where('media_id', $id)
             ->delete();
 
-        return response()->json([
-            'message' => 'Le post n\'est plus partagé.'
-        ], 200);
+        return response(['message' => 'Le post n\'est plus partagé.']);
     }
 }

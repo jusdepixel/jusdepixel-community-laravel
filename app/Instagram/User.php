@@ -18,4 +18,9 @@ class User extends Initialize
 
         $this->setSession(array_merge($session, $profile));
     }
+
+    public function logout(): void
+    {
+        $this->forgetSession();
+    }
 }

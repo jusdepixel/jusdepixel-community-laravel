@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Instagram\Controller as InstagramController;
-use Illuminate\Http\JsonResponse;
 
 class InitializeController extends InstagramController
 {
-    public function profile(): JsonResponse
+    public function profile(): object
     {
         unset ($this->profile->accessToken);
 
-        return response()->json($this->profile);
+        return $this->profile;
     }
-    public function url(): JsonResponse
+    public function url(): string
     {
-        return response()->json($this->authorizeUrl);
+        return $this->authorizeUrl;
     }
 }

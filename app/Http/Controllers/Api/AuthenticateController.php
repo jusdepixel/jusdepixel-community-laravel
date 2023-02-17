@@ -4,28 +4,29 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\InstagramException;
 use App\Instagram\Controller as InstagramController;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class AuthenticateController extends InstagramController
 {
-    public function __invoke(): JsonResponse
+    public function __invoke(): Response|array
     {
-        if ($this->request->get('code') === null) {
-            return response()->json([
+        $code = $this->request->get('code');
+
+        if ($code === null) {
+            return response([
                 'message' => 'Le code n\'a pas été fourni par instagram, ou est déjà utilisé.'
             ], 422);
         }
 
-        $profile = $this->instagram->authenticate($this->request->get('code'));
+        $profile = $this->instagram->authenticate($code);
 
         if ($profile instanceof GuzzleException) {
-            return response()->json([
-                "message" => $profile->getMessage(),
-            ], $profile->getCode());
+            return (new InstagramException())->render($profile, $this->instagram);
         }
 
-        return response()->json($profile, 200);
+        return $profile;
     }
 }

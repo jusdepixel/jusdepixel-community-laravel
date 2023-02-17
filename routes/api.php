@@ -16,5 +16,5 @@ Route::get('/logout', LogoutController::class)->name('logout');
 Route::get('/authenticate', AuthenticateController::class)->name('authenticate');
 Route::get('/initialize/profile', [InitializeController::class, 'profile'])->name('initialize@profile');
 Route::get('/initialize/url', [InitializeController::class, 'url'])->name('initialize@url');
-Route::get('/post/create/{id}', [PostController::class, 'create'])->name('post@create');
-Route::get('/post/delete/{id}', [PostController::class, 'delete'])->name('post@delete');
+Route::post('/post/create/{id}', [PostController::class, 'create'])->name('post@create');
+Route::post('/post/delete/{id}', [PostController::class, 'delete'])->name('post@delete');

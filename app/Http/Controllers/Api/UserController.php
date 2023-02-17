@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Instagram\Controller as InstagramController;
 use App\Models\InstagramUser;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserController extends InstagramController
 {
@@ -23,19 +23,16 @@ class UserController extends InstagramController
         }
     }
 
-    public function delete(): JsonResponse
+    public function delete(): array
     {
         InstagramUser::query()->where('ig_id', $this->profile->igId)->delete();
 
-        return response()->json([
-            'message' => 'Votre compte a bien été supprimé.'
-        ], 200);
+        return ['message' => 'Votre compte a bien été supprimé.'];
     }
 
-    public function getMe(): JsonResponse
+    public function getMe(): array|Collection
     {
-        $me = InstagramUser::query()->where('ig_id', $this->profile->igId)->get();
-        return response()->json($me, 200);
+        return InstagramUser::query()->where('ig_id', $this->profile->igId)->get();
     }
 
     private function iExist(): int

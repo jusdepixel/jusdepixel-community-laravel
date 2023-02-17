@@ -8,11 +8,11 @@ use App\Exceptions\InstagramException;
 use App\Instagram\Controller as InstagramController;
 use App\Models\InstagramPost;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class MeController extends InstagramController
 {
-    public function __invoke(): JsonResponse
+    public function __invoke(): array|Response
     {
         $posts =  $this->instagram->getPosts();
 
@@ -27,7 +27,7 @@ class MeController extends InstagramController
             return $post;
         };
 
-        return response()->json(array_map($map, $posts), 200);
+        return array_map($map, $posts);
     }
 
     private function getSharedPosts(): array

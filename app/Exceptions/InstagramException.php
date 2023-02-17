@@ -14,23 +14,23 @@ class InstagramException extends Exception
         return false;
     }
 
-    public function render(GuzzleException $response, Instagram $instagram): JsonResponse
+    public function render(GuzzleException $response, Instagram $instagram): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
     {
         switch($response->getCode()) {
             case 400:
                 $instagram->logout();
-                return response()->json([
+                return response([
                     'message' => 'Session Instagram expirée, veuillez vous connecter.',
                     'profile' => $instagram->getProfile()
                 ], $response->getCode());
 
             case 403:
-                return response()->json([
+                return response([
                     'message' => 'Plafond d\'utilisation de l\'API Instagram atteint, veuillez patienter.'
                 ], $response->getCode());
 
             default:
-                return response()->json([
+                return response([
                     'message' => $response->getMessage()
                 ], $response->getCode());
         }

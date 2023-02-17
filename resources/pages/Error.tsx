@@ -2,37 +2,67 @@ import React, {useState} from "react"
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 
-export default function Error({setProfile} : {setProfile: any}) {
-    const [isLoading, setLoading] = useState(true)
-    const {state} = useLocation()
-    const {result} = state
+type errorType = {
+    result?: any
+    code?: number
+    status?: string
+    message?: string|null
+    more?: string
+    profile?: any
+}
 
-    if (result && result.code === 400) {
+export default function Error({setProfile, notFound} : {setProfile: any, notFound: boolean}) {
+    const [isLoading, setLoading] = useState(true)
+    const [error, setError] = useState<errorType>({})
+    const {state} = useLocation()
+    let result: errorType = state;
+
+    React.useEffect(() => {
         if (isLoading) {
-            axios.get('/api/logout').then(r => {
-                result.status = "Bad Request"
-                result.more = "Session Instagram expirée, veuillez vous connecter."
-                setProfile({isAuthenticated: false})
+            if (notFound) {
+                setError({
+                    code: 404,
+                    status: "File not found",
+                    message: "REQUEST FAILED WITH STATUS CODE 404",
+                    more: "Page non trouvée...",
+                    profile: {},
+                })
                 setLoading(false)
-            })
+
+            } else {
+                setError(result)
+
+                if (error) {
+                    console.log(error)
+
+                    if (error.code === 400) {
+                        axios.get('/api/logout').then(r => {
+                            setError({
+                                status: "Bad Request",
+                                message: "Session Instagram expirée, veuillez vous connecter.",
+                            })
+                            setProfile({isAuthenticated: false})
+                            setLoading(false)
+                        })
+
+                    } else {
+                        setLoading(false)
+                    }
+                } else {
+                    setLoading(false)
+                }
+            }
         }
-    } else if (result) {
-        setLoading(false)
-    }
+    })
 
     return (
-
-        (!isLoading ?
-                <>
-                    <h3><i className="bi bi-bug"></i> Erreur {result.code}: {result.status}</h3>
-                    <h6 className="text-secondary">{result.message}</h6>
-                    {result.more && <p className={"more"}>{result.more}</p>}
-                </>
-        :
+        (!isLoading && error) ?
             <>
-                <h3><i className="bi bi-bug"></i> Erreur</h3>
-                <h6 className="text-secondary">Erreur inconnue...</h6>
+                <h3><i className="bi bi-bug"></i> Erreur {error.code}: {error.status}</h3>
+                <h6 className="text-secondary">{error.message}</h6>
+                {error.more && <p className={"more"}>{error.more}</p>}
             </>
-        )
+        :
+            <></>
     )
 }

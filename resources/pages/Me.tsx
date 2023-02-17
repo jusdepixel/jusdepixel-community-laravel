@@ -62,7 +62,7 @@ export default function Me({profile, setProfile} : {profile: any, setProfile: an
                     </div>
                 </>
             :
-                <Navigate to={"/error"} state={{result}} />
+                <Navigate to={"/error"} state={result} />
         :
             <></>
         )

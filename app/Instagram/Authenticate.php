@@ -93,11 +93,6 @@ class Authenticate extends User
         }
     }
 
-    public function logout(): void
-    {
-        $this->forgetSession();
-    }
-
     public function setCode(?string $code): self
     {
         $this->code = str_replace('#_', '', $code);

@@ -15,7 +15,7 @@ export default function Post({post, page} : {post: any, page: string}) {
     const handleCreate = (e: any) => {
         const id = handle(e)
 
-        axios.get('/api/post/create/' + id)
+        axios.post('/api/post/create/' + id)
             .then(() => {
                 let divPost = document.getElementById("post-" + id)
                 if (divPost) divPost.classList.add('return')
@@ -29,7 +29,7 @@ export default function Post({post, page} : {post: any, page: string}) {
     const handleDelete = (e: any) => {
         const id = handle(e)
 
-        axios.get('/api/post/delete/' + id)
+        axios.post('/api/post/delete/' + id)
             .then(() => {
                 let divPost = document.getElementById("post-" + id)
                 if (divPost) divPost.classList.remove('return')

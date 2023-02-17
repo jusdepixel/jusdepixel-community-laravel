@@ -3,12 +3,15 @@ import {Navigate} from "react-router-dom";
 import axios from "axios"
 
 export default function Error({setProfile} : {setProfile: any}) {
-    axios.get('/api/logout')
-        .then((response) => {
-            if (response.status === 200) {
-                setProfile(response.data)
-            }
-        })
+
+    React.useEffect(() => {
+        axios.get('/api/logout')
+            .then((response) => {
+                if (response.status === 200) {
+                    setProfile(response.data)
+                }
+            })
+    })
 
     return <Navigate to="/" />
 }
