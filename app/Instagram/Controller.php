@@ -1,20 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Instagram;
 
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
-class Controller
+class Controller extends BaseController
 {
-    protected object $profile;
-    protected string $authorizeUrl;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function __construct(protected Instagram $instagram, protected Request $request)
+    protected static Instagram $instagram;
+
+    public function __construct()
     {
-        $this->instagram->initialize();
-        $this->profile = $this->instagram->getProfile();
-        $this->authorizeUrl = $this->instagram->requestAuthorizeUrl();
+        self::$instagram = new Instagram();
     }
 }

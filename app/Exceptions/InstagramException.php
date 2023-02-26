@@ -2,38 +2,46 @@
 
 namespace App\Exceptions;
 
-use App\Instagram\Instagram;
+use App\Instagram\Auth;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class InstagramException extends Exception
 {
-    public function report(): ?bool
+    private function myResponse(string $message, int $code): Response
     {
-        return false;
-    }
+        $response['message'] = $message;
 
-    public function render(GuzzleException $response, Instagram $instagram): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-    {
-        switch($response->getCode()) {
-            case 400:
-                $instagram->logout();
-                return response([
-                    'message' => 'Session Instagram expirée, veuillez vous connecter.',
-                    'profile' => $instagram->getProfile()
-                ], $response->getCode());
-
-            case 403:
-                return response([
-                    'message' => 'Plafond d\'utilisation de l\'API Instagram atteint, veuillez patienter.'
-                ], $response->getCode());
-
-            default:
-                return response([
-                    'message' => $response->getMessage()
-                ], $response->getCode());
+        if (getenv('APP_ENV') !== 'testing') {
+            $response['authorizeUrl'] = Auth::authorizeUrl();
+            $response['profile'] = Auth::getProfile();
         }
 
+        return response($response, $code);
+    }
+
+    public function render(Exception $e): Response
+    {
+        $code = $e->getCode();
+        $message = $e->getMessage();
+
+        switch ($message) {
+
+            case 'BAD_TOKEN_OR_USAGE':
+                Auth::logout();
+                return $this->myResponse("Bad or expired Instagram token, log in to Instagram", $code);
+
+            case 'BAD_CODE_OR_USAGE':
+                return $this->myResponse("Bad or no longer valid code, or has already been used", $code);
+
+            case 'MIDDLEWARE_INSTAGRAM':
+                return $this->myResponse("Log in to Instagram to access this page", $code);
+        }
+
+        if ($code === 403) {
+            return $this->myResponse("Instagram API usage cap reached, please wait", 403);
+        }
+
+        return $this->myResponse($message, 403);
     }
 }
