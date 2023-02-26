@@ -10,11 +10,13 @@ return new class extends Migration
     {
         Schema::create('instagram_users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignId('ig_id')->unique();
-            $table->timestamp('timestamp');
-            $table->string('username');
-            $table->integer('media_count');
-            $table->string('token');
+            $table->integer('instagram_id')->unique();
+            $table->string('username')->nullable();
+            $table->integer('media_count')->nullable();
+            $table->string('access_token')->nullable();
+            $table->string('token_type')->nullable();
+            $table->integer('expires_in')->nullable();
+            $table->integer('updated_time')->nullable();
             $table->timestamps();
         });
     }

@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('instagram_posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignId('ig_id');
+            $table->foreignId('instagram_user_id');
+            $table->integer('instagram_id')->unique();
             $table->timestamp('timestamp');
             $table->timestamp('caption')->nullable();
             $table->timestamp('permalink');
-            $table->string('media_id');
             $table->string('media_type');
             $table->string('media_url');
             $table->string('thumbnail_url')->nullable();

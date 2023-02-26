@@ -14,7 +14,11 @@
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./app/Http/Controllers</directory>
+            <directory suffix=".php">./app/Http/Controllers/Api/Instagram</directory>
+            <directory suffix=".php">./app/Http/Resources/Instagram</directory>
+            <directory suffix="Instagram.php">./app/Http/Middleware</directory>
+            <directory suffix=".php">./app/Actions</directory>
+            <directory suffix=".php">./app/Http/Jobs/Instagram</directory>
             <directory suffix=".php">./app/Instagram</directory>
         </include>
     </coverage>
