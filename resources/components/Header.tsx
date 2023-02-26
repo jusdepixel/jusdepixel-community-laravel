@@ -1,8 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import Moment from "moment";
 
-export default function Header({profile, authorizeUrl} : {profile: any, authorizeUrl: string}) {
+export default function Header() {
     return (
         <header>
             <nav
@@ -15,34 +14,7 @@ export default function Header({profile, authorizeUrl} : {profile: any, authoriz
                     </Link>
 
                     <ul className="navbar-nav d-flex">
-                        {profile.isAuthenticated ? (
-                            <>
-                                <li className="nav-item">
-                                    <span className="nav-link">
-                                        <i className="bi bi-person-fill me-1"></i>
-                                        {profile.username}
-                                    </span>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/me" className="btn btn-sm btn-info">
-                                        <i className="bi bi-instagram"></i> Mes posts
-                                    </Link>
-                                </li>
-                                <li className="nav-item me-0">
-                                    <Link to="/logout" className="btn btn-sm btn-secondary">
-                                        <i className="bi bi-door-closed"></i> Déconnexion
-                                    </Link>
-                                </li>
-                            </>
-                        ) : (
-                            <>
-                                <li className="nav-item me-0">
-                                    <a href={authorizeUrl} className="btn btn-sm btn-info">
-                                        <i className="bi bi-instagram"></i> Connexion Instagram
-                                    </a>
-                                </li>
-                            </>
-                        )}
+
                     </ul>
                 </div>
             </nav>
