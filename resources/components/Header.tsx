@@ -1,29 +1,12 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import axios from "axios";
+import React from "react"
+import { Link } from "react-router-dom"
 
-export interface PropsHeader {
-    setLoading: Dispatch<SetStateAction<string>>
+interface PropsHeader {
     authorizeUrl: string
+    profile: any
 }
 
 const Header: React.FC<PropsHeader> = (props) => {
-    const [profile, setProfile] = useState<any>([])
-
-    const fetchProfile = () => {
-        axios
-            .get('/api/auth/profile')
-            .then((response) => {
-                setProfile(response.data.profile)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }
-
-    useEffect(() => {
-        fetchProfile()
-    }, [])
 
     return (
         <header>
@@ -37,13 +20,13 @@ const Header: React.FC<PropsHeader> = (props) => {
                     </Link>
 
                     <ul className="navbar-nav d-flex">
-                        {profile.isAuthenticated ? (
+                        {props.profile.isAuthenticated ? (
                             <>
                                 <li className="nav-item">
-                                    <span className="nav-link">
+                                    <Link to="/profile" className="nav-link">
                                         <i className="bi bi-person-fill me-1"></i>
-                                        {profile.username}
-                                    </span>
+                                        {props.profile.userName}
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link to="/me" className="btn btn-sm btn-info">
@@ -52,7 +35,7 @@ const Header: React.FC<PropsHeader> = (props) => {
                                 </li>
                                 <li className="nav-item me-0">
                                     <Link to="/logout" className="btn btn-sm btn-secondary">
-                                        <i className="bi bi-door-closed"></i> Login
+                                        <i className="bi bi-door-closed"></i> Logout
                                     </Link>
                                 </li>
                             </>
