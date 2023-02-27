@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
 import axios from "axios";
-
-import Post from "../components/Post";
+import Moment from "moment/moment";
 
 interface PropsMe {
     profile: any
 }
 
 const Me: React.FC<PropsMe> = (props) => {
-    const [posts, setPosts] = useState<any>([])
-    const [shared, setShared] = useState<any>([])
+    const [myProfile, setMyProfile] = useState<any>([]);
     const error = {
         title: "403 Error",
         description: "Forbidden",
@@ -19,12 +17,12 @@ const Me: React.FC<PropsMe> = (props) => {
         login: true,
     }
 
-    const fetchPosts = () => {
+    const fetchProfile = () => {
         axios
-            .get('/api/me/posts')
+            .get('/api/me/profile')
             .then((response) => {
-                setPosts(response.data.posts.data)
-                setShared(response.data.shared)
+                setMyProfile(response.data)
+                console.log(response.data)
             })
             .catch((error) => {
                 console.error(error)
@@ -32,28 +30,27 @@ const Me: React.FC<PropsMe> = (props) => {
     }
 
     useEffect(() => {
-        fetchPosts()
+        fetchProfile()
     }, [])
 
 
     return !props.profile.isAuthenticated ?
         <Navigate replace to="/error" state={error}/> : <>
-            <h3><i className="bi bi-instagram"></i> My Instagram feed</h3>
+            <h3><i className="bi bi-instagram"></i> My Community profile</h3>
             <h6 className="text-secondary">
                 {props.profile.userName}
                 &nbsp;|&nbsp;
                 {props.profile.mediaCount} post{props.profile.mediaCount > 1 && 's'}
             </h6>
 
-            <div className="row mt-5">
-                {posts.map((post: any) =>
-                    <Post
-                        key={post.instagram_id}
-                        post={post}
-                        back={true}
-                        shared={post.id}
-                    />
-                )}
+            <div className="infos-user mt-5">
+                <i className="bi bi-info-circle-fill"></i>
+                <p>id : <span>{myProfile.id}</span></p>
+                <p>created_at : <span>{Moment(myProfile.created_at).format('DD/MM/YYYY hh:mm')}</span></p>
+                <p>updated_at : <span>{Moment(myProfile.updated_at).format('DD/MM/YYYY hh:mm')}</span></p>
+                <p>instagram_id : <span>{myProfile.instagram_id}</span></p>
+                <p>token_type : <span>{myProfile.token_type}</span></p>
+                <p>expires_days : <span>{myProfile.expires_days}</span></p>
             </div>
         </>
 }

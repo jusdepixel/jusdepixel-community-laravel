@@ -1,9 +1,4 @@
-  
-  
-
 ![Jusdepixel Community](https://community.jusdepixel.fr/logo.png)  
-
-![Jusdepixel Community](https://img.shields.io/badge/coverage-88%25-yellowgreen)
 
 ### Objectif
 Créer un système de récupération automatique des posts d'une page Instagram
@@ -18,6 +13,7 @@ Créer un système de récupération automatique des posts d'une page Instagram
 ***
 #### Backend API : Laravel 9 / SQLite
 #### Frontend : ReactJS / Typescript
+![Jusdepixel Community](https://img.shields.io/badge/coverage-88%25-yellowgreen)
 
 ***
 ### Comment je vois le projet
@@ -26,13 +22,13 @@ On utilisera l'authentification Meta pour identifier l'utilisateur. Il faudra pr
 
 ***
 ### Installation
-Configurer l'app Instagram dans le <strong>.env</strong>
+Config Instagram application <strong>.env</strong>
 ```
 INSTAGRAM_CLIENT_ID=INSTAGRAM_CLIENT_ID
 INSTAGRAM_CLIENT_SECRET=INSTAGRAM_CLIENT_SECRET
 INSTAGRAM_REQUEST_URI=INSTAGRAM_REQUEST_URI
 ```
-Et installation
+Install / Build / Serve
 ```
 composer install
 yarn install

@@ -87,10 +87,17 @@ h6, .text-secondary {
         display: block;
         width: 100%;
         margin-top: 20px;
-        color: $white;
+        color: $white !important;
 
         &:hover {
             background-color: $black;
+        }
+
+        &:disabled {
+            background-color: transparent !important;
+            &:after {
+                content: ' loading...';
+            }
         }
     }
 
@@ -120,8 +127,12 @@ h6, .text-secondary {
     word-wrap: break-word;
     color: #919aa1;
     border-left: 4px solid $gray-600;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
     padding: 10px;
+
+    & p {
+        margin-bottom: 0.4rem;
+    }
 
     & span {
         color: $white;

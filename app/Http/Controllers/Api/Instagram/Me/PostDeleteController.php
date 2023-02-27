@@ -9,12 +9,12 @@ use Illuminate\Http\Response;
 
 final class PostDeleteController
 {
-    public function __invoke(InstagramPost $post): Response
+    public function __invoke(InstagramPost $post)//: Response
     {
         $post->delete();
 
         return response([
-            'message' => 'Post has been deleted',
+            'message' => 'Post has been deleted'
         ], 204);
     }
 }
