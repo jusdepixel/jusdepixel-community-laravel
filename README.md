@@ -1,6 +1,9 @@
   
   
-![Légende](https://community.jusdepixel.fr/logo.png)
+
+![Jusdepixel Community](https://community.jusdepixel.fr/logo.png)  
+
+![Jusdepixel Community](https://img.shields.io/badge/coverage-88%25-yellowgreen)
 
 ### Objectif
 Créer un système de récupération automatique des posts d'une page Instagram
@@ -13,26 +16,32 @@ Créer un système de récupération automatique des posts d'une page Instagram
 > Il n'est évidemment pas nécessaire que ce soit ta propre page Instagram.
 
 ***
+#### Backend API : Laravel 9 / SQLite
+#### Frontend : ReactJS / Typescript
+
+***
+### Comment je vois le projet
+Créer un site communautaire où chaque utilisateur pourra partager un/plusieurs de ses posts, qui seront regroupés sur un seul fil.
+On utilisera l'authentification Meta pour identifier l'utilisateur. Il faudra prendre en compte le refresh du long life token (60 jours), le refresh des medias (surprise !), et le taux d'utilisation de l'API Instagram.
+
+***
 ### Installation
-
-```
-git clone git@github.com:jusdepixel/jusdepixel-community-laravel.git ./
-composer install
-yarn install
-yarn build
-php artisan migrate
-```
-
-### Environnement
-Ajouter (ou decrypter le .env.encrypted)
-
+Configurer l'app Instagram dans le <strong>.env</strong>
 ```
 INSTAGRAM_CLIENT_ID=INSTAGRAM_CLIENT_ID
 INSTAGRAM_CLIENT_SECRET=INSTAGRAM_CLIENT_SECRET
 INSTAGRAM_REQUEST_URI=INSTAGRAM_REQUEST_URI
 ```
+Et installation
+```
+composer install
+yarn install
+yarn build
+php artisan migrate
+php artisan serve
+```
 
 ***
-### Liens
-Démo : [https://community.jusdepixel.fr/](https://community.jusdepixel.fr/)  
-Doc API : [https://community.jusdepixel.fr/request-docs](https://community.jusdepixel.fr/request-docs)
+### Liens 
+Doc API : [https://community.jusdepixel.fr/request-docs](https://community.jusdepixel.fr/request-docs)  
+Démo : [https://community.jusdepixel.fr/](https://community.jusdepixel.fr/) 
