@@ -14,6 +14,7 @@ Créer un système de récupération automatique des posts d'une page Instagram
 ![Jusdepixel Community](https://img.shields.io/badge/coverage-88%25-yellowgreen)
 #### Backend API : Laravel 9 / SQLite
 #### Frontend : ReactJS / Typescript
+![Jusdepixel Community](https://img.shields.io/badge/coverage-88%25-yellowgreen)
 
 ***
 ### Comment je vois le projet
