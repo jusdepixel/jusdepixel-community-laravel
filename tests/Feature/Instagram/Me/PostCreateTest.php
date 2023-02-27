@@ -33,6 +33,7 @@ class PostCreateTest extends Instagram
                 ->where('message', 'Post already exists')
                 ->has('post', fn ($json) =>
                     $json
+                        ->where('id', 'bac04411-9999-4cd2-b9d9-06ad4f9c1c62')
                         ->where('instagram_id', 12345678910)
                         ->where('instagram_user_id', 'bac04411-0000-4cd2-b9d9-06ad4f9c1c62')
                         ->where('caption', 'Caption Post !')
