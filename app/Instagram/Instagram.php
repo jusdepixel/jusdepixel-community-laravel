@@ -8,6 +8,7 @@ use App\Http\Resources\Instagram\Me\MePostCollection;
 use App\Http\Resources\Instagram\Me\MePostResource;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Cache;
 
 final class Instagram extends Auth
 {
@@ -20,21 +21,27 @@ final class Instagram extends Auth
     public static function getPosts(): MePostCollection
     {
         try {
-            $params = [
-                'query' => [
-                    'access_token' => self::getProfile()->accessToken,
-                    'fields' => self::FIELDS
-                ]
-            ];
+            $cacheKey = "my-posts-" . self::getProfile()->instagramId;
 
-            $response = self::$clientGuzzle->request(
-                'GET',
-                self::GRAPH_URL . self::MEDIAS_URI,
-                $params
-            );
-            $result = json_decode($response->getBody()->getContents())->data;
+            if (!Cache::has($cacheKey)) {
+                $params = [
+                    'query' => [
+                        'access_token' => self::getProfile()->accessToken,
+                        'fields' => self::FIELDS
+                    ]
+                ];
 
-            return new MePostCollection($result);
+                $response = self::$clientGuzzle->request(
+                    'GET',
+                    self::GRAPH_URL . self::MEDIAS_URI,
+                    $params
+                );
+                $result = json_decode($response->getBody()->getContents())->data;
+
+                Cache::add($cacheKey, $result);
+            }
+
+            return new MePostCollection(Cache::get($cacheKey));
 
         } catch (GuzzleException $e) {
             if (getenv('APP_ENV') === 'testing') {
@@ -52,21 +59,27 @@ final class Instagram extends Auth
     public static function getPost(int $id): MePostResource
     {
         try {
-            $params = [
-                'query' => [
-                    'access_token' => self::getProfile()->accessToken,
-                    'fields' => self::FIELDS
-                ]
-            ];
+            $cacheKey = "post-" . $id;
 
-            $response = self::$clientGuzzle->request(
-                'GET',
-                self::GRAPH_URL . $id,
-                $params
-            );
-            $result = json_decode($response->getBody()->getContents());
+            if (!Cache::has($cacheKey)) {
+                $params = [
+                    'query' => [
+                        'access_token' => self::getProfile()->accessToken,
+                        'fields' => self::FIELDS
+                    ]
+                ];
 
-            return new MePostResource($result);
+                $response = self::$clientGuzzle->request(
+                    'GET',
+                    self::GRAPH_URL . $id,
+                    $params
+                );
+                $result = json_decode($response->getBody()->getContents());
+
+                Cache::add($cacheKey, $result);
+            }
+
+            return new MePostResource(Cache::get($cacheKey));
 
         } catch (GuzzleException $e) {
             if (getenv('APP_ENV') === 'testing' && $id === 12345678910) {

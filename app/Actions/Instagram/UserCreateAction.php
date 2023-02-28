@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Instagram;
 
 use App\Instagram\Auth;
 use App\Models\Instagram\InstagramUser;
@@ -12,16 +12,6 @@ final readonly class UserCreateAction
     public function __construct(
         private Auth $auth
     ) {}
-
-    /**
-     * @throws Exception
-     */
-    public function getUserInstagram(): null|object
-    {
-        return InstagramUser::query()
-            ->where(['instagram_id' => $this->auth::getProfile()->instagramId])
-            ->first();
-    }
 
     /**
      * @throws Exception
@@ -43,6 +33,16 @@ final readonly class UserCreateAction
     /**
      * @throws Exception
      */
+    private function getUserInstagram(): null|object
+    {
+        return InstagramUser::query()
+            ->where(['instagram_id' => $this->auth::getProfile()->instagramId])
+            ->first();
+    }
+
+    /**
+     * @throws Exception
+     */
     private function createUser(): Model
     {
         $tokenInfos = $this->auth::requestLongLifeToken();
@@ -53,8 +53,7 @@ final readonly class UserCreateAction
             'media_count' => $this->auth::getProfile()->mediaCount,
             'access_token' => $tokenInfos['accessToken'],
             'token_type' => $tokenInfos['tokenType'],
-            'expires_in' => $tokenInfos['expiresIn'],
-            'updated_time' => time(),
+            'expires_in' => $tokenInfos['expiresIn']
         ]);
     }
 }

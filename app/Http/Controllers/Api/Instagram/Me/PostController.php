@@ -11,6 +11,11 @@ use Illuminate\Http\Response;
 
 final class PostController extends Controller
 {
+    /**
+     * @todo Cache One Post
+     * @param int $id
+     * @return MePostResource|Response
+     */
     public function __invoke(int $id): MePostResource|Response
     {
         try {

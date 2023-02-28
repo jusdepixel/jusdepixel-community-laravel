@@ -62,12 +62,14 @@ class Auth extends Profile
     /**
      * @throws Exception
      */
-    public static function requestLongLifeToken(): array
+    public static function requestLongLifeToken(?string $token = null)//: array
     {
         try {
+            $token === null ? self::getProfile()->accessToken : $token;
+
             $params = [
                 'query' => [
-                    'access_token' => self::getProfile()->accessToken,
+                    'access_token' => $token,
                     'grant_type' => 'ig_exchange_token',
                     'client_secret' => self::$clientSecret,
                 ]
@@ -78,6 +80,7 @@ class Auth extends Profile
                 self::REFRESH_TOKEN_URL,
                 $params
             );
+
             $result = json_decode($response->getBody()->getContents());
 
             return [

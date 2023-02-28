@@ -18,7 +18,11 @@ Créer un système de récupération automatique des posts d'une page Instagram
 ***
 ### Comment je vois le projet
 Créer un site communautaire où chaque utilisateur pourra partager un/plusieurs de ses posts, qui seront regroupés sur un seul fil.
-On utilisera l'authentification Meta pour identifier l'utilisateur. Il faudra prendre en compte le refresh du long life token (60 jours), le refresh des medias (surprise !), et le taux d'utilisation de l'API Instagram.
+On utilisera l'authentification Meta pour identifier l'utilisateur. Il faudra prendre en compte le refresh du long life token (60 jours), le refresh des medias (surprise !), et le taux d'utilisation de l'API Instagram.  
+
+<strong>Update :</strong> Impossible de refresh les long life token et medias url...
+Instagram impose une session valide :  
+> "OAuth "Facebook Platform" "invalid_request" "Session key invalid. This could be because the session key has an incorrect format, or because the user has revoked this session"
 
 ***
 ### Installation

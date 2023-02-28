@@ -22,7 +22,6 @@ const Me: React.FC<PropsMe> = (props) => {
             .get('/api/me/profile')
             .then((response) => {
                 setMyProfile(response.data)
-                console.log(response.data)
             })
             .catch((error) => {
                 console.error(error)
@@ -45,12 +44,12 @@ const Me: React.FC<PropsMe> = (props) => {
 
             <div className="infos-user mt-5">
                 <i className="bi bi-info-circle-fill"></i>
-                <p>id : <span>{myProfile.id}</span></p>
-                <p>created_at : <span>{Moment(myProfile.created_at).format('DD/MM/YYYY hh:mm')}</span></p>
-                <p>instagram_id : <span>{myProfile.instagram_id}</span></p>
-                <p>token_type : <span>{myProfile.token_type}</span></p>
-                <p>expires_days : <span>{myProfile.expires_days}</span></p>
-                <p>updated_at : <span>{Moment(myProfile.updated_at).format('DD/MM/YYYY hh:mm')}</span></p>
+                <p>Username : <span>{myProfile.username}</span></p>
+                <p>Created at : <span>{Moment(myProfile.created_at).format('DD/MM/YYYY hh:mm')}</span></p>
+                <p>Community Id : <span>{myProfile.id}</span></p>
+                <p>Instagram Id : <span>{myProfile.instagram_id}</span></p>
+                <p>Instagram posts : <span>{myProfile.media_count}</span></p>
+                <p>Token expires in : <span>{myProfile.expires_in_human}</span></p>
             </div>
         </>
 }

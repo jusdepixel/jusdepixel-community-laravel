@@ -7,6 +7,7 @@ namespace App\Instagram;
 use App\DataObjects\ProfileDataObject;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Facades\Cache;
 
 class Profile extends Init
 {
@@ -47,19 +48,28 @@ class Profile extends Init
     public static function requestProfile(): array|ProfileDataObject
     {
         try {
-            $params = [
-                'query' => [
-                    'access_token' => self::getProfile()->accessToken,
-                    'fields' => 'account_type,media_count,username'
-                ]
-            ];
+            $cacheKey = "my-profile-" . self::getProfile()->instagramId;
 
-            $response = self::$clientGuzzle->request(
-                'GET',
-                self::GRAPH_URL . "me",
-                $params
-            );
-            $result = json_decode($response->getBody()->getContents());
+            if (!Cache::has($cacheKey)) {
+
+                $params = [
+                    'query' => [
+                        'access_token' => self::getProfile()->accessToken,
+                        'fields' => 'account_type,media_count,username'
+                    ]
+                ];
+
+                $response = self::$clientGuzzle->request(
+                    'GET',
+                    self::GRAPH_URL . "me",
+                    $params
+                );
+                $result = json_decode($response->getBody()->getContents());
+
+                Cache::add($cacheKey, $result);
+            }
+
+            $result = Cache::get($cacheKey);
 
             return self::setProfile([
                 'userName' => $result->username,

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Actions\UserCreateAction;
+use App\Actions\Instagram\UserCreateAction;
 use App\Exceptions\InstagramException;
 use App\Instagram\Auth;
 use Closure;

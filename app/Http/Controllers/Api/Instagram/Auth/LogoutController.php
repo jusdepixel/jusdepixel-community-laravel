@@ -10,12 +10,12 @@ final class LogoutController extends Controller
 {
     public function __invoke(): array
     {
-        $profile = self::$instagram::getProfile();
+        $userName = self::$instagram::getProfile()->userName;
         self::$instagram::logout();
 
         return [
-            'message' => $profile->userName . ' got disconnected from Instagram',
-            'profile' => self::$instagram::getProfile(), // On retourne le profil par défaut au front
+            'message' => $userName . ' got disconnected from Instagram',
+            'profile' => self::$instagram::getProfile(),
         ];
     }
 }

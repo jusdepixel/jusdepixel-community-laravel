@@ -4,6 +4,7 @@ namespace App\Jobs\Instagram;
 
 use App\Instagram\Auth;
 use App\Models\Instagram\InstagramUser;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,20 +15,47 @@ class RefreshTokenJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private Auth $authenticate)
+    private InstagramUser $user;
+
+    /**
+     * @throws Exception
+     */
+    public function __construct()
     {
-        $users = InstagramUser::query()
-            ->select(['token'])
-            ->get();
+        $this->user = new InstagramUser();
+        $this->handle();
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @throws Exception
      */
     public function handle(): void
     {
-        //
+        $daysExpires = 60;
+        $usersRefresh = [];
+        $auth = new Auth();
+
+        $usersToRefresh = $this->user::query()
+            ->select('id', 'username', 'access_token')
+            ->where('expires_in', '<', 86400 * $daysExpires)
+            ->get();
+
+        foreach ($usersToRefresh as $user) {
+            [$accessToken, $tokenType, $expiresIn] = $auth::requestLongLifeToken($user->access_token);
+
+            $this->user::query()
+                ->where('id', $user->id)
+                ->update([
+                    'access_token' => $accessToken,
+                    'token_typed' => $tokenType,
+                    'expires_in' => $expiresIn
+                ]);
+
+            $usersRefresh[$user->id] = $user->username;
+        }
+
+        foreach($usersRefresh as $id => $username) {
+            print_r("Refresh $username ($id)");
+        }
     }
 }
