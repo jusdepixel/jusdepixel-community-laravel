@@ -8,7 +8,6 @@ use App\Actions\Instagram\UserCacheAction;
 use App\Exceptions\InstagramException;
 use App\Instagram\Controller;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 
 final class LoginController extends Controller
 {

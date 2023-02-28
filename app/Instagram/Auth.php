@@ -62,10 +62,12 @@ class Auth extends Profile
     /**
      * @throws Exception
      */
-    public static function requestLongLifeToken(?string $token = null)//: array
+    public static function requestLongLifeToken(?string $token = null): array
     {
         try {
-            $token === null ? self::getProfile()->accessToken : $token;
+            if ($token === null) {
+                $token = self::getProfile()->accessToken;
+            }
 
             $params = [
                 'query' => [
