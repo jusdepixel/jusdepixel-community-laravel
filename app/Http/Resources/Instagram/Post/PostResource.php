@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Instagram\Post;
 
-use App\Http\Resources\Instagram\User\UserResource;
+use App\Http\Resources\Instagram\Author\AuthorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
@@ -14,7 +14,7 @@ class PostResource extends JsonResource
         return [
             'id' => $this->id,
             'instagram_id' => $this->instagram_id,
-            'author' => new UserResource($this->whenLoaded('author')),
+            'author' => new AuthorResource($this->whenLoaded('author')),
             'caption' => $this->caption,
             'permalink' => $this->permalink,
             'timestamp' => $this->timestamp,

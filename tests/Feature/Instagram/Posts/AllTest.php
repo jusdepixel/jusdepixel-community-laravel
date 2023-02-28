@@ -27,22 +27,13 @@ class AllTest extends Instagram
             $json
                 ->has('posts')
                 ->has('posts.count')
-                ->has('posts.data')
                 ->has('posts.data.0', fn ($json) =>
                     $json
                         ->where('id', 'bac04411-9999-4cd2-b9d9-06ad4f9c1c62')
                         ->where('author', [
-                            'access_token' => 'sdsdkjçiqjlkqjdç_eseklkq,sdo,ce_lq,,scoijqelqek,dllqldkq,cv',
-                            'created_at' => '2023-02-24T19:42:56.000000Z',
-                            'expires_in' => 1677267776,
                             'id' => 'bac04411-0000-4cd2-b9d9-06ad4f9c1c62',
                             'instagram_id' => 123456789,
-                            'media_count' => 42,
-                            'token_type' => 'Bearer',
-                            'updated_at' => '2023-02-24T19:42:56.000000Z',
-                            'updated_time' => 1677267776,
                             'username' => 'userName',
-                            'expires_days' => $this->expires(),
                         ])
                         ->where('instagram_id', 12345678910)
                         ->where('caption', 'Caption Post !')

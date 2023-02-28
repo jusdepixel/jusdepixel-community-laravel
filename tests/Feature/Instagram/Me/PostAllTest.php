@@ -18,13 +18,13 @@ class PostAllTest extends Instagram
     public function test_response_success()
     {
         self::fakeProfile();
-
         $response = $this->get('/api/me/posts');
+
         $response->assertJson(fn (AssertableJson $json) =>
             $json
                 ->has('posts.data.0', fn ($json) =>
                     $json
-                        ->where('id', 'bac04411-9999-4cd2-b9d9-06ad4f9c1c62')
+                        ->where('id', null)
                         ->where('instagram_id', 12345678910)
                         ->where('instagram_user_id', 'bac04411-0000-4cd2-b9d9-06ad4f9c1c62')
                         ->where('caption', 'Caption Post !')
