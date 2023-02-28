@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\DataObjects\ProfileDataObject;
 use App\Http\Resources\Instagram\Me\MePostResource;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 abstract class Instagram extends TestCase
@@ -44,5 +45,17 @@ abstract class Instagram extends TestCase
         ];
 
         return new MePostResource((object) $post);
+    }
+
+    protected static function expiresInHuman(int $expiresIn)
+    {
+        $startDate = Carbon::createFromTimestamp(time());
+        $endDate = Carbon::createFromTimestamp(time() + $expiresIn);
+
+        $days = $startDate->diffInDays($endDate);
+        $hours = $startDate->copy()->addDays($days)->diffInHours($endDate);
+        $minutes = $startDate->copy()->addDays($days)->addHours($hours)->diffInMinutes($endDate);
+
+        return "$days days, $hours hours and $minutes minutes";
     }
 }

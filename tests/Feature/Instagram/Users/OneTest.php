@@ -42,10 +42,9 @@ class OneTest extends Instagram
                     ->where('access_token', 'sdsdkjçiqjlkqjdç_eseklkq,sdo,ce_lq,,scoijqelqek,dllqldkq,cv')
                     ->where('token_type', 'Bearer')
                     ->where('expires_in', 1677267776)
-                    ->where('updated_time', 1677267776)
                     ->where('created_at', '2023-02-24T19:42:56.000000Z')
                     ->where('updated_at', '2023-02-24T19:42:56.000000Z')
-                    ->where('expires_days', $this->expires())
+                    ->where('expires_in_human',  self::expiresInHuman(1677267776))
                     ->where('posts', [
                         'count' => 1,
                         'data' => [0 => [

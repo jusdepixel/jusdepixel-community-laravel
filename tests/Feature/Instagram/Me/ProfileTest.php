@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Instagram\Me;
 
+use App\Http\Resources\Instagram\Post\PostCollection;
+use Carbon\Carbon;
 use Database\Seeders\InstagramSeeder;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\Instagram;
@@ -43,18 +45,9 @@ class ProfileTest extends Instagram
                 ->where('access_token', 'sdsdkjçiqjlkqjdç_eseklkq,sdo,ce_lq,,scoijqelqek,dllqldkq,cv')
                 ->where('token_type', 'Bearer')
                 ->where('expires_in', 1677267776)
-                ->where('updated_time', 1677267776)
                 ->where('created_at', '2023-02-24T19:42:56.000000Z')
                 ->where('updated_at', '2023-02-24T19:42:56.000000Z')
-                ->where('expires_days',  $this->expires())
+                ->where('expires_in_human',  self::expiresInHuman(1677267776))
             );
-    }
-
-    private function expires(): int
-    {
-        $expiresAt = 1677267776 + 1677267776;
-        $diff = $expiresAt - time();
-
-        return (int) round($diff / 86400);
     }
 }
