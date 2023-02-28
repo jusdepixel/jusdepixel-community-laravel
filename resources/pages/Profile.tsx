@@ -47,10 +47,10 @@ const Me: React.FC<PropsMe> = (props) => {
                 <i className="bi bi-info-circle-fill"></i>
                 <p>id : <span>{myProfile.id}</span></p>
                 <p>created_at : <span>{Moment(myProfile.created_at).format('DD/MM/YYYY hh:mm')}</span></p>
-                <p>updated_at : <span>{Moment(myProfile.updated_at).format('DD/MM/YYYY hh:mm')}</span></p>
                 <p>instagram_id : <span>{myProfile.instagram_id}</span></p>
                 <p>token_type : <span>{myProfile.token_type}</span></p>
                 <p>expires_days : <span>{myProfile.expires_days}</span></p>
+                <p>updated_at : <span>{Moment(myProfile.updated_at).format('DD/MM/YYYY hh:mm')}</span></p>
             </div>
         </>
 }
